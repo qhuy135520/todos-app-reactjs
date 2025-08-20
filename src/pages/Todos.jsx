@@ -1,3 +1,5 @@
+import Heading from '../ui/Heading'
+
 export default function Todos() {
-  return <div>Todos</div>
+  return <Heading as='h1'>Todos</Heading>
 }

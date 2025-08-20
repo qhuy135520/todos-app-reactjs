@@ -1,3 +1,5 @@
+import Heading from '../ui/Heading'
+
 export default function Categories() {
-  return <div>Categories</div>
+  return <Heading as='h1'>Categories</Heading>
 }
