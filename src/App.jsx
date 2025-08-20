@@ -42,6 +42,7 @@ export default function App() {
                 </ProtectedRoute>
               }
             >
+              <Route index element={<Navigate replace to='dashboard' />} />
               <Route index path='dashboard' element={<Dashboard />} />
               <Route path='todos' element={<Todos />} />
               <Route path='categories' element={<Categories />} />
@@ -76,4 +77,3 @@ export default function App() {
     </DarkModeProvider>
   )
 }
-
