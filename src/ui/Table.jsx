@@ -3,11 +3,11 @@ import styled from 'styled-components'
 
 const StyledTable = styled.div`
   border: 1px solid var(--color-grey-200);
-
+  min-width: 1200px;
+  width: 100%;
   font-size: 1.4rem;
   background-color: var(--color-grey-0);
   border-radius: 7px;
-  overflow: hidden;
 `
 
 const CommonRow = styled.div`
@@ -87,7 +87,7 @@ function Row({ children }) {
 }
 
 function Body({ data, render }) {
-  if (true) return <Empty>No data to show at the moment</Empty>
+  if (!data.length) return <Empty>No data to show at the moment</Empty>
 
   return <StyledBody>{data.map(render)}</StyledBody>
 }
