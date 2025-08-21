@@ -97,4 +97,3 @@ Modal.Open = Open
 Modal.Window = Window
 
 export default Modal
-

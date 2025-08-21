@@ -4,11 +4,9 @@ import Pagination from '../../ui/Pagination'
 import Table from '../../ui/Table'
 
 export default function TodosTable() {
-  const filterValue = searchParas.get('priority') || 'all'
-
   return (
     <Menus>
-      <Table>
+      <Table columns='30fr 20fr 30fr 10fr 10fr 10fr'>
         <Table.Header>
           <div>User</div>
           <div>Title</div>
@@ -17,10 +15,10 @@ export default function TodosTable() {
           <div>Due Date</div>
           <div>Priority</div>
         </Table.Header>
-        {/* <Table.Body></Table.Body>
+        <Table.Body data={[]}></Table.Body>
         <Table.Footer>
           <Pagination count={20} />
-        </Table.Footer> */}
+        </Table.Footer>
       </Table>
     </Menus>
   )

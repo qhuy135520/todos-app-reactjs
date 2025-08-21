@@ -10,8 +10,8 @@ export default function Todos() {
       <Row type='horizontal'>
         <Heading as='h1'>All Todos</Heading>
         <TodosOperation />
-        <TodosTable />
       </Row>
+      <TodosTable />
     </>
   )
 }

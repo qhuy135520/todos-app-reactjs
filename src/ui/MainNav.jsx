@@ -1,10 +1,17 @@
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
-import { HiOutlineHome, HiOutlineUser, HiOutlineUsers } from 'react-icons/hi'
 import {
+  HiOutlineHome,
+  HiOutlineQuestionMarkCircle,
+  HiOutlineTag,
+} from 'react-icons/hi'
+import {
+  HiOutlineCalendarDateRange,
   HiOutlineCalendarDays,
   HiOutlineCog6Tooth,
   HiOutlineHomeModern,
+  HiOutlineListBullet,
+  HiOutlineXMark,
 } from 'react-icons/hi2'
 
 const NavList = styled.ul`
@@ -55,29 +62,42 @@ function MainNav() {
   return (
     <nav>
       <NavList>
+        <p> Main Menu</p>
         <li>
           <StyledNavLink to='/dashboard'>
             <HiOutlineHome />
-            <span>Home</span>
+            <span>Dashboard</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to='todos'>
-            <HiOutlineCalendarDays />
-            <span>Todo</span>
+            <HiOutlineListBullet />
+            <span>Tasks</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to='categories'>
-            <HiOutlineHomeModern />
+            <HiOutlineTag />
             <span>Categories</span>
           </StyledNavLink>
         </li>
-
+        <li>
+          <StyledNavLink to=''>
+            <HiOutlineCalendarDateRange />
+            <span>Calendar</span>
+          </StyledNavLink>
+        </li>
+        <span>Settings</span>
         <li>
           <StyledNavLink to=''>
             <HiOutlineCog6Tooth />
             <span>Settings </span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to=''>
+            <HiOutlineQuestionMarkCircle />
+            <span>Supports </span>
           </StyledNavLink>
         </li>
       </NavList>
@@ -86,4 +106,3 @@ function MainNav() {
 }
 
 export default MainNav
-
