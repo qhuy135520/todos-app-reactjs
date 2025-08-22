@@ -12,7 +12,6 @@ export default function Todos() {
       <Row type='vertical'>
         <Heading as='h1'>All Todos</Heading>
         <TodosOperation />
-        
         <TodosTable />
       </Row>
     </>
