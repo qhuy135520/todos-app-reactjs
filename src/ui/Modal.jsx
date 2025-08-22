@@ -12,8 +12,14 @@ const StyledModal = styled.div`
   background-color: var(--color-grey-0);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-lg);
-  padding: 3.2rem 4rem;
+  /* padding: 3.2rem 4rem; */
   transition: all 0.5s;
+  width: ${({ size }) =>
+    size === 'small'
+      ? '30rem'
+      : size === 'large'
+      ? '80rem'
+      : '50rem'}; 
 `
 
 const Overlay = styled.div`
@@ -73,7 +79,7 @@ function Open({ children, opens: opensWindowName }) {
   return cloneElement(children, { onClick: () => open(opensWindowName) })
 }
 
-function Window({ children, name }) {
+function Window({ children, name, size }) {
   const { openName, close } = useContext(ModalContext)
 
   const ref = useOutsideClick(close)
@@ -82,7 +88,7 @@ function Window({ children, name }) {
 
   return createPortal(
     <Overlay>
-      <StyledModal ref={ref}>
+      <StyledModal ref={ref} size={size}>
         <Button onClick={close}>
           <HiXMark />
         </Button>

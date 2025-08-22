@@ -12,7 +12,7 @@ const StyledTable = styled.div`
 
 const CommonRow = styled.div`
   display: grid;
-  grid-template-columns: ${(props) => props.columns};
+  grid-template-columns: ${(props) => props.$columns};
   column-gap: 2.4rem;
   align-items: center;
   transition: none;
@@ -26,6 +26,7 @@ const StyledHeader = styled(CommonRow)`
   letter-spacing: 0.4px;
   font-weight: 600;
   color: var(--color-grey-600);
+  
 `
 
 const StyledRow = styled(CommonRow)`
@@ -34,6 +35,8 @@ const StyledRow = styled(CommonRow)`
   &:not(:last-child) {
     border-bottom: 1px solid var(--color-grey-100);
   }
+
+  ${({ $completed }) => $completed && `color: var(--color-red-700);`}
 `
 
 const StyledBody = styled.section`
@@ -72,22 +75,22 @@ function Table({ columns, children }) {
 function Header({ children }) {
   const { columns } = useContext(TableContext)
   return (
-    <StyledHeader role='row' columns={columns} as='header'>
+    <StyledHeader role='row' $columns={columns} as='header'>
       {children}
     </StyledHeader>
   )
 }
-function Row({ children }) {
+function Row({ children, completed }) {
   const { columns } = useContext(TableContext)
   return (
-    <StyledRow role='row' columns={columns}>
+    <StyledRow role='row' $columns={columns} $completed={completed}>
       {children}
     </StyledRow>
   )
 }
 
 function Body({ data, render }) {
-  if (!data.length) return <Empty>No data to show at the moment</Empty>
+  if (!data.length || false) return <Empty>No data to show at the moment</Empty>
 
   return <StyledBody>{data.map(render)}</StyledBody>
 }
