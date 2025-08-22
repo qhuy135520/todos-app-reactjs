@@ -4,7 +4,6 @@ import Pagination from '../../ui/Pagination'
 import Table from '../../ui/Table'
 import { useUser } from '../authentication/useUser'
 import { useGetTodos } from './useGetTodos'
-import Button from '../../ui/Button'
 import Checkbox from '../../ui/Checkbox'
 import { useUpdateTodos } from './useUpdateTodo'
 import { PAGE_SIZE } from '../../utils/constants'
@@ -13,11 +12,15 @@ import UpdateTaskForm from './UpdateTaskForm'
 import DeleteTaskForm from './DeleteTaskForm'
 import ButtonTodo from './ButtonTodo'
 import { useSearch } from '../../context/SearchTaskContext'
+import { getCategoriesFromTask } from '../../services/apiTodos'
+import { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { selectAllCategories } from '../categories/categoriesSlice'
 
 export default function TodosTable() {
-
   const [searchParams] = useSearchParams()
   const { query } = useSearch()
+
 
   const filterPriority = searchParams.get('priority') || 'all'
   const filterDueDate = searchParams.get('sortBy') || 'default'
@@ -25,6 +28,25 @@ export default function TodosTable() {
   const { user, isPending } = useUser()
   const { data = [], isLoading, error } = useGetTodos(user?.id)
   const { updateTodo } = useUpdateTodos(user?.id)
+  const [todosWithCategories, setTodosWithCategories] = useState([])
+  useEffect(() => {
+    async function fetchTodosAndCategories() {
+      if (!user) return
+      // 1️⃣ Fetch todos
+      const todos = data
+
+      // 2️⃣ Fetch categories cho từng todo
+      const todosWithCats = await Promise.all(
+        todos.map(async (todo) => {
+          const categories = await getCategoriesFromTask(todo.id)
+          return { ...todo, categories }
+        })
+      )
+      setTodosWithCategories(todosWithCats)
+    }
+
+    fetchTodosAndCategories()
+  }, [user, data])
 
   if (isPending || !user) return <p>Loading user...</p>
   if (isLoading) return <p>Loading task...</p>
@@ -32,8 +54,10 @@ export default function TodosTable() {
 
   // 1️⃣ Lọc search
   let filteredTodos = query
-    ? data.filter((t) => t.title.toLowerCase().includes(query.toLowerCase()))
-    : data
+    ? todosWithCategories.filter((t) =>
+        t.title.toLowerCase().includes(query.toLowerCase())
+      )
+    : todosWithCategories
 
   // 2️⃣ Filter priority
   if (filterPriority !== 'all') {
@@ -61,13 +85,12 @@ export default function TodosTable() {
   const count = filteredTodos.length
   const startIndex = (currentPage - 1) * PAGE_SIZE
   const todosToShow = filteredTodos.slice(startIndex, startIndex + PAGE_SIZE)
-
   function handleToggle(todo) {
     updateTodo({ taskID: todo.id, isCompleted: !todo.isCompleted })
   }
   return (
     <Menus>
-      <Table columns='1fr 2fr 3fr 1fr 2fr 1fr 1fr'>
+      <Table columns='1fr 2fr 3fr 1fr 2fr 1fr 1fr 1fr'>
         <Table.Header>
           <div>STT</div>
           <div>Title</div>
@@ -75,6 +98,7 @@ export default function TodosTable() {
           <div>Completed</div>
           <div>Due Date</div>
           <div>Priority</div>
+          <div>Category</div>
           <div style={{ justifySelf: 'center' }}>Action</div>
         </Table.Header>
         <Table.Body
@@ -108,6 +132,14 @@ export default function TodosTable() {
                 }}
               >
                 {todo.priority}
+              </div>
+              <div>
+                {todo.categories.map((cat, index) => (
+                  <span key={index}>
+                    {cat.categories.name}
+                    {index < todo.categories.length - 1 && ', '}
+                  </span>
+                ))}
               </div>
               <div
                 style={{

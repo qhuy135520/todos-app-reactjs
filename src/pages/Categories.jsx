@@ -24,11 +24,11 @@ import AddCategories from '../features/categories/AddCategories'
 
 export default function Categories() {
   const dispatch = useDispatch()
+
   const categories = useSelector(selectAllCategories)
   const categoriesPerPage = useSelector(selectPaginatedCategories)
-
   const status = useSelector(selectCategoriesStatus)
-
+  
   const handleSearch = (e) => {
     dispatch(setSearchTerm(e.target.value))
   }
