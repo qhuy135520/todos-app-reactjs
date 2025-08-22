@@ -55,7 +55,7 @@ const fakeData = [
   { label: 'Feb 06', totalSales: 1450, extrasSales: 400 },
 ]
 
-function SalesChart({ bookings, numDays }) {
+function SalesChart({}) {
   const { isDarkMode } = useDarkMode()
 
   const colors = isDarkMode
@@ -74,12 +74,9 @@ function SalesChart({ bookings, numDays }) {
 
   return (
     <StyledSalesChart>
-      <Heading as='h2'>
-        Sales from {format(allDates.at(0), 'MMM dd yyyy')} &mdash;{' '}
-        {format(allDates.at(-1), 'MMM dd yyyy')}
-      </Heading>
+      <Heading as='h2'>DashBoard</Heading>
       <ResponsiveContainer height={300} width={'100%'}>
-        <AreaChart data={data}>
+        <AreaChart data={fakeData}>
           <XAxis
             dataKey='label'
             tick={{ fill: colors.text }}
@@ -116,4 +113,3 @@ function SalesChart({ bookings, numDays }) {
   )
 }
 export default SalesChart
-

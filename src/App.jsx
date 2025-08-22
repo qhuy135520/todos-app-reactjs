@@ -21,6 +21,7 @@ import Signup from './pages/Signup'
 import { SearchTaskProvider } from './context/SearchTaskContext'
 import { Provider } from 'react-redux'
 import { store } from './store'
+import Calendar from './pages/Calendar'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -59,7 +60,8 @@ export default function App() {
                 />
 
                 <Route path='categories' element={<Categories />} />
-                <Route index path='account' element={<Account />} />
+                <Route path='account' element={<Account />} />
+                <Route path='calendar' element={<Calendar />} />
               </Route>
               <Route path='signup' element={<Signup />} />
               <Route path='login' element={<Login />} />

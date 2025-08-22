@@ -1,49 +1,38 @@
-import { HiOutlineBriefcase, HiOutlineChartBar } from 'react-icons/hi'
+import {
+  HiOutlineChartBar,
+  HiOutlineCheck,
+  HiOutlineClock,
+} from 'react-icons/hi'
+import { HiOutlineListBullet } from 'react-icons/hi2'
+import { CgDanger } from 'react-icons/cg'
+
 import Stat from './Stat'
-import { HiOutlineBanknotes, HiOutlineCalendarDays } from 'react-icons/hi2'
-import { formatCurrency } from '../../utils/helpers'
 
-export default function Stats({
-  bookings,
-  confirmedStays,
-  numDays,
-  cabinCount,
-}) {
-  const numBookings = bookings.length
+export default function Stats({ todos }) {
+  console.log(todos)
 
-  const sales = bookings.reduce((acc, cur) => acc + cur.totalPrice, 0)
-
-  const checkins = confirmedStays.length
-
-  const opccupation =
-    confirmedStays.reduce((acc, cur) => acc + cur.numNights, 0) /
-    (numDays * cabinCount)
   return (
     <>
       <Stat
-        title='Bookings'
+        title='Total Work'
         color='blue'
-        icon={<HiOutlineBriefcase />}
-        value={numBookings}
+        icon={<HiOutlineListBullet />}
+        value={12}
       />
       <Stat
-        title='Sales'
+        title='Finished Work'
         color='green'
-        icon={<HiOutlineBanknotes />}
-        value={formatCurrency(sales)}
+        icon={<HiOutlineCheck />}
+        value={21}
       />
       <Stat
-        title='Check ins'
-        color='indigo'
-        icon={<HiOutlineCalendarDays />}
-        value={checkins}
-      />
-      <Stat
-        title='Occupancy rate'
+        title='Waiting Work'
         color='yellow'
-        icon={<HiOutlineChartBar />}
-        value={Math.round(opccupation * 100) + '%'}
+        icon={<HiOutlineClock />}
+        value={3}
       />
+
+      <Stat title='Overdue Work' color='red' icon={<CgDanger />} value={4} />
     </>
   )
 }

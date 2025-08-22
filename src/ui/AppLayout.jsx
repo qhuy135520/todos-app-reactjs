@@ -28,11 +28,13 @@ const Container = styled.div`
 
 export default function AppLayout() {
   const { user } = useUser()
-    const dispatch = useDispatch()
-    useEffect(() => {
-      if (!user) return
-      dispatch(fetchCategories(user.id))
-    }, [user])
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (!user) return
+    dispatch(fetchCategories(user.id))
+  }, [user])
+
   return (
     <StyledAppLayout>
       <Header />

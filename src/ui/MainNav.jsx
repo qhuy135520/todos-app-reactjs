@@ -62,7 +62,7 @@ function MainNav() {
   return (
     <nav>
       <NavList>
-        <p> Main Menu</p>
+        <strong> Main Menu</strong>
         <li>
           <StyledNavLink to='/dashboard'>
             <HiOutlineHome />
@@ -82,12 +82,12 @@ function MainNav() {
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to=''>
+          <StyledNavLink to='calendar'>
             <HiOutlineCalendarDateRange />
             <span>Calendar</span>
           </StyledNavLink>
         </li>
-        <span>Settings</span>
+        <strong>Settings</strong>
         <li>
           <StyledNavLink to=''>
             <HiOutlineCog6Tooth />
