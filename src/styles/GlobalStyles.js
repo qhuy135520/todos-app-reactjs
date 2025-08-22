@@ -2,7 +2,13 @@ import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyles = createGlobalStyle`
 :root {
+--color-yellow-500: #d3c631ff ;
+--color-green-500: #30dc00ff ;
+
   /* Indigo */
+--priority-high: var(--color-red-700);
+--priority-medium: var(--color-yellow-500);
+--priority-low: var(--color-green-500);
 
 
   &, &.light-mode{

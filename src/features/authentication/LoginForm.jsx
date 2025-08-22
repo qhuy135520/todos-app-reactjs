@@ -53,12 +53,12 @@ function LoginForm() {
         />
       </FormRowVertical>
       <FormRowVertical>
-        <Button variation='primary' size='large' disabled={isPending}>
+        <Button $variation='primary' size='large' disabled={isPending}>
           {!isPending ? 'Login' : <SpinnerMini />}
         </Button>
         <Button
           type='button'
-          variation='danger'
+          $variation='danger'
           size='large'
           disabled={isPending}
           onClick={() => navigate('/signup')}
@@ -77,4 +77,3 @@ function LoginForm() {
 }
 
 export default LoginForm
-

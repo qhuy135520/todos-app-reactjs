@@ -18,6 +18,7 @@ import { DarkModeProvider } from './context/DarkModeContext'
 import Todos from './pages/Todos'
 import Categories from './pages/Categories'
 import Signup from './pages/Signup'
+import { SearchTaskProvider } from './context/SearchTaskContext'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -44,7 +45,16 @@ export default function App() {
             >
               <Route index element={<Navigate replace to='dashboard' />} />
               <Route index path='dashboard' element={<Dashboard />} />
-              <Route path='todos' element={<Todos />} />
+
+              <Route
+                path='todos'
+                element={
+                  <SearchTaskProvider>
+                    <Todos />
+                  </SearchTaskProvider>
+                }
+              />
+
               <Route path='categories' element={<Categories />} />
               <Route index path='account' element={<Account />} />
             </Route>

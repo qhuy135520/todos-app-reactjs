@@ -57,12 +57,12 @@ function UpdatePasswordForm() {
         <Button
           onClick={reset}
           type='reset'
-          variation='secondary'
+          $variation='secondary'
           size='medium'
         >
           Cancel
         </Button>
-        <Button disabled={isUpdating} size='medium' variation='primary'>
+        <Button disabled={isUpdating} size='medium' $variation='primary'>
           Update password
         </Button>
       </FormRow>
@@ -71,4 +71,3 @@ function UpdatePasswordForm() {
 }
 
 export default UpdatePasswordForm
-
