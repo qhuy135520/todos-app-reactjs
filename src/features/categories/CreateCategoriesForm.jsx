@@ -101,7 +101,7 @@ export default function CreateCategoriesForm({
             Cancel
           </Button>
           <Button variation='primary' size='medium' disabled={isPending}>
-            Create new Category
+            {isEditSession ? 'Update Category' : 'Create new Category'}
           </Button>
         </FormRow>
       </Form>

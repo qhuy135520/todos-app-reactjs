@@ -10,7 +10,7 @@ export default function AddCategories() {
           + Add Categories
         </Button>
       </Modal.Open>
-      <Modal.Window name='categories-form'>
+      <Modal.Window name='categories-form' size='large'>
         <CreateCategoriesForm />
       </Modal.Window>
     </Modal>

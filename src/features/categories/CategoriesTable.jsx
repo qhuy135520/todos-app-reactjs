@@ -1,10 +1,10 @@
 import { useSearchParams } from 'react-router-dom'
 import Menus from '../../ui/Menus'
-import Pagination from '../../ui/Pagination'
 import Table from '../../ui/Table'
 import CategoryRow from './CategoryRow'
 import { useSelector } from 'react-redux'
 import { selectPagination } from './categoriesSlice'
+import CategoriesPagination from './CategoriesPagination'
 
 export default function CategoriesTable({ categories }) {
   const { currentPage, totalPages, limit, totalItems } =
@@ -28,7 +28,7 @@ export default function CategoriesTable({ categories }) {
           )}
         ></Table.Body>
         <Table.Footer>
-          <Pagination
+          <CategoriesPagination
             totalItems={totalItems}
             currentPage={currentPage}
             totalPages={totalPages}

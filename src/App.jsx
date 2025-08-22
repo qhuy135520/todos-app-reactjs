@@ -33,59 +33,6 @@ const queryClient = new QueryClient({
 export default function App() {
   return (
     <DarkModeProvider>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
-        <GlobalStyles />
-        <BrowserRouter>
-          <Routes>
-            <Route
-              element={
-                <ProtectedRoute>
-                  <AppLayout />
-                </ProtectedRoute>
-              }
-            >
-              <Route index element={<Navigate replace to='dashboard' />} />
-              <Route index path='dashboard' element={<Dashboard />} />
-
-              <Route
-                path='todos'
-                element={
-                  <SearchTaskProvider>
-                    <Todos />
-                  </SearchTaskProvider>
-                }
-              />
-
-              <Route path='categories' element={<Categories />} />
-              <Route index path='account' element={<Account />} />
-            </Route>
-            <Route path='signup' element={<Signup />} />
-            <Route path='login' element={<Login />} />
-            <Route path='*' element={<PageNotFound />} />
-          </Routes>
-        </BrowserRouter>
-        <Toaster
-          position='top-center'
-          gutter={12}
-          containerStyle={{ margin: '8px' }}
-          toastOptions={{
-            success: {
-              duration: 3000,
-            },
-            error: {
-              duration: 5000,
-            },
-            style: {
-              fontSize: '16px',
-              maxWidth: '500px',
-              padding: '16px 24px',
-              backgroundColor: 'var(--color-grey-0)',
-              color: 'var(--color-grey-700)',
-            },
-          }}
-        />
-      </QueryClientProvider>
       <Provider store={store}>
         <QueryClientProvider client={queryClient}>
           <ReactQueryDevtools initialIsOpen={false} />
@@ -101,7 +48,16 @@ export default function App() {
               >
                 <Route index element={<Navigate replace to='dashboard' />} />
                 <Route index path='dashboard' element={<Dashboard />} />
-                <Route path='todos' element={<Todos />} />
+
+                <Route
+                  path='todos'
+                  element={
+                    <SearchTaskProvider>
+                      <Todos />
+                    </SearchTaskProvider>
+                  }
+                />
+
                 <Route path='categories' element={<Categories />} />
                 <Route index path='account' element={<Account />} />
               </Route>

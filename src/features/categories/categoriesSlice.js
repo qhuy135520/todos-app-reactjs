@@ -127,10 +127,9 @@ export const createCategory = createAsyncThunk(
 )
 export const deleteCategory = createAsyncThunk(
   'categories/deleteCategory',
-  async ({ categoryId, status, userId }) => {
+  async ({ categoryId, userId }) => {
     const { data, totalItems, totalPages } = await deleteCategoryApi(
       categoryId,
-      status,
       userId
     )
 

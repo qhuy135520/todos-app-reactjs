@@ -12,14 +12,10 @@ const StyledModal = styled.div`
   background-color: var(--color-grey-0);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-lg);
-  /* padding: 3.2rem 4rem; */
+  padding: 3.2rem 4rem;
   transition: all 0.5s;
   width: ${({ size }) =>
-    size === 'small'
-      ? '30rem'
-      : size === 'large'
-      ? '80rem'
-      : '50rem'}; 
+    size === 'small' ? '30rem' : size === 'large' ? '88rem' : '50rem'};
 `
 
 const Overlay = styled.div`

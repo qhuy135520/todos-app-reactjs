@@ -92,7 +92,7 @@ export default function CategoriesActionsDrop({ category }) {
                 </Menu.Item>
               </Modal.Open>
             </Menu>
-            <Modal.Window name='edit'>
+            <Modal.Window name='edit' size='large'>
               <CreateCategoriesForm categoryEdit={category} />
             </Modal.Window>
             <Modal.Window name='delete'>
