@@ -2,6 +2,10 @@ import { Outlet } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import Header from './Header'
 import styled from 'styled-components'
+import { useUser } from '../features/authentication/useUser'
+import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { fetchCategories } from '../features/categories/categoriesSlice'
 
 const StyledAppLayout = styled.div`
   display: grid;
@@ -23,6 +27,14 @@ const Container = styled.div`
 `
 
 export default function AppLayout() {
+  const { user } = useUser()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (!user) return
+    dispatch(fetchCategories(user.id))
+  }, [user])
+
   return (
     <StyledAppLayout>
       <Header />

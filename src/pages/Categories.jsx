@@ -23,19 +23,11 @@ import Input from '../ui/Input'
 import AddCategories from '../features/categories/AddCategories'
 
 export default function Categories() {
-  const { user } = useUser()
-  const [searchParams, setSearchParams] = useSearchParams()
   const dispatch = useDispatch()
-
   const categories = useSelector(selectAllCategories)
   const categoriesPerPage = useSelector(selectPaginatedCategories)
 
   const status = useSelector(selectCategoriesStatus)
-
-  useEffect(() => {
-    if (!user) return
-    dispatch(fetchCategories(user.id))
-  }, [user])
 
   const handleSearch = (e) => {
     dispatch(setSearchTerm(e.target.value))

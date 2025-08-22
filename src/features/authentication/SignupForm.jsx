@@ -91,13 +91,13 @@ function SignupForm() {
       <FormRowVertical>
         {/* type is an HTML attribute! */}
 
-        <Button $variation='primary' size='medium' disabled={isPending}>
+        <Button variation='primary' size='medium' disabled={isPending}>
           Create new user
         </Button>
 
         <Button
           type='button'
-          $variation='danger'
+          variation='danger'
           size='large'
           disabled={isPending}
           onClick={() => navigate('/login')}
