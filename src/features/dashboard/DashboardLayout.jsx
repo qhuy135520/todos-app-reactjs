@@ -7,6 +7,7 @@ import DashBoardDistribution from './DashBoardDistribution'
 import DashBoardProgress from './DashBoardProgress'
 import PriorityRadialChart from './PriorityRadialChart'
 import KanbanBoard from './KanbanBoard'
+import DashboardProgressOverTime from './DashboardProgressOverTime'
 
 const StyledDashboardLayout = styled.div`
   display: grid;
@@ -32,8 +33,9 @@ function DashBoardLayout() {
         <DashBoardDistribution todos={todos} />
         <PriorityRadialChart todos={todos} />
         <DashBoardProgress todos={todos} />
+        <DashboardProgressOverTime todos={todos} />
+        <KanbanBoard todos={todos} userId={user.id} />
       </StyledDashboardLayout>
-      <KanbanBoard todos={todos} userId={user.id} />
     </>
   )
 }
