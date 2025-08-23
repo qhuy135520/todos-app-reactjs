@@ -1,42 +1,21 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { compareAsc, compareDesc } from 'date-fns'
-import { useSearchParams } from 'react-router-dom'
-
-import {
-  fetchCategories,
-  selectAllCategories,
-  selectCategoriesStatus,
-  selectPaginatedCategories,
-  setSearchTerm,
-} from '../features/categories/categoriesSlice'
-import { useUser } from '../features/authentication/useUser'
+import useCategories from '../hooks/useCategories'
 
 import CategoriesOperation from '../features/categories/CategoriesOperation'
 import Heading from '../ui/Heading'
-import Row from '../ui/Row'
 import CategoriesStats from '../features/categories/CategoriesStats'
+import Row from '../ui/Row'
 import Button from '../ui/Button'
-import Spinner from '../ui/Spinner'
 import CategoriesTable from '../features/categories/CategoriesTable'
 import Input from '../ui/Input'
 import AddCategories from '../features/categories/AddCategories'
+import LoadingComponent from '../ui/LoadingComponent'
 
 export default function Categories() {
-  const dispatch = useDispatch()
-
-  const categories = useSelector(selectAllCategories)
-  const categoriesPerPage = useSelector(selectPaginatedCategories)
-  const status = useSelector(selectCategoriesStatus)
-  
-  const handleSearch = (e) => {
-    dispatch(setSearchTerm(e.target.value))
-  }
-
-  if (status === 'pending') return <Spinner />
+  const { categories, categoriesPerPage, status, error, handleSearch } =
+    useCategories()
 
   return (
-    <>
+    <LoadingComponent isLoading={status === 'pending'} error={error}>
       <Row type='horizontal'>
         <Heading as='h1'>Category Management</Heading>
         <AddCategories />
@@ -61,6 +40,6 @@ export default function Categories() {
         <CategoriesOperation />
       </Row>
       <CategoriesTable categories={categoriesPerPage} />
-    </>
+    </LoadingComponent>
   )
 }

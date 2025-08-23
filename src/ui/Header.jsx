@@ -4,6 +4,8 @@ import HeaderMenu from './HeaderMenu'
 import UserAvatar from '../features/authentication/UserAvatar'
 
 const StyledHeader = styled.header`
+  position: fixed;
+  width: 100%;
   background-color: var(--color-grey-0);
   padding: 1.4rem 4.8rem;
   border-bottom: 1px solid var(--color-grey-100);
@@ -11,6 +13,7 @@ const StyledHeader = styled.header`
   gap: 2.4rem;
   align-items: center;
   justify-content: flex-end;
+  z-index: 100;
 `
 
 export default function Header() {

@@ -15,8 +15,10 @@ const StyledAppLayout = styled.div`
 `
 
 const Main = styled.main`
+  margin-top: 50px;
   background-color: var(--color-grey-50);
   padding: 4rem 4.8rem 6.4rem;
+  grid-column: 2/-1;
 `
 const Container = styled.div`
   max-width: 120rem;

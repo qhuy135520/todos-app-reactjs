@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
+
 import {
   DndContext,
   closestCorners,
@@ -6,6 +7,8 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core'
+import styled from 'styled-components'
+
 import {
   SortableContext,
   useSortable,
@@ -14,13 +17,13 @@ import {
 } from '@dnd-kit/sortable'
 import { useDroppable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
-import '../../styles/KanbanBoard.css'
+
 import { useUpdateTodos } from '../todos/useUpdateTodo'
-import Heading from '../../ui/Heading'
-import styled from 'styled-components'
+import '../../styles/KanbanBoard.css'
+import { format } from 'date-fns'
 
 const StyledKanbanBoard = styled.div`
-  background-color: var(--color-grey-0);
+  background-color: var(--color-grey-100);
   border: 1px solid var(--color-grey-100);
   border-radius: var(--border-radius-md);
   color: 'var(--color-grey-900)';
@@ -29,16 +32,9 @@ const StyledKanbanBoard = styled.div`
 `
 
 const COLUMN_META = {
-  todo: { title: 'To Do', bg: '#f5f7fa' },
-  done: { title: 'Done', bg: '#ecfdf5' },
+  todo: { title: 'To Do', bg: 'var(--color-blue-100)' },
+  done: { title: 'Done', bg: 'var(--color-green-100)' },
 }
-
-const formatDate = (iso) =>
-  new Date(iso).toLocaleDateString(undefined, {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-  })
 
 const priorityColor = (p) =>
   p === 'high' ? '#ff4d4f' : p === 'medium' ? '#faad14' : '#52c41a'
@@ -86,7 +82,7 @@ function TaskCard({ task, columnId }) {
       </div>
       <p className='card-desc'>{task.description}</p>
       <p className={`card-date ${nearDeadline ? 'card-date--danger' : ''}`}>
-        Due: <strong>{formatDate(task.dueDate)}</strong>
+        Due: <strong>{format(task.dueDate, 'MMM dd ,yyyy')}</strong>
       </p>
     </div>
   )

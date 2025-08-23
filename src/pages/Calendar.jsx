@@ -4,18 +4,14 @@ import WorkSchedule from '../features/calendar/WorkSchedule'
 import { useGetTodos } from '../features/todos/useGetTodos'
 import Heading from '../ui/Heading'
 import Row from '../ui/Row'
-import Spinner from '../ui/Spinner'
-import MonthlyStatistics from '../features/calendar/MonthlyStatistics'
-import UpcomingEvent from '../features/calendar/UpcomingEvent'
+import LoadingComponent from '../ui/LoadingComponent'
 
 export default function Calendar() {
   const { user } = useUser()
   const { isPending, data: todos, error } = useGetTodos(user.id)
 
-  if (isPending) return <Spinner />
-
   return (
-    <>
+    <LoadingComponent isLoading={isPending} error={error}>
       <Row type='vertical'>
         <Row type='horizontal'>
           <Heading>Work Schedule</Heading>
@@ -38,6 +34,6 @@ export default function Calendar() {
           <MonthlyStatistics /> */}
         </Row>
       </Row>
-    </>
+    </LoadingComponent>
   )
 }
