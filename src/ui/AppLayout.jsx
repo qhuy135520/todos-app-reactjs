@@ -11,11 +11,12 @@ const StyledAppLayout = styled.div`
   display: grid;
   grid-template-columns: 26rem 1fr;
   grid-template-rows: auto 1fr;
-  height: 100vh;
+  min-height: 100vh;
 `
 
 const Main = styled.main`
   margin-top: 50px;
+  min-height: 100vh;
   background-color: var(--color-grey-50);
   padding: 4rem 4.8rem 6.4rem;
   grid-column: 2/-1;

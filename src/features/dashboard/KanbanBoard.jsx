@@ -23,7 +23,7 @@ import '../../styles/KanbanBoard.css'
 import { format } from 'date-fns'
 
 const StyledKanbanBoard = styled.div`
-  background-color: var(--color-grey-100);
+  background-color: var(--color-grey-0);
   border: 1px solid var(--color-grey-100);
   border-radius: var(--border-radius-md);
   color: 'var(--color-grey-900)';

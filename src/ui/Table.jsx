@@ -26,7 +26,6 @@ const StyledHeader = styled(CommonRow)`
   letter-spacing: 0.4px;
   font-weight: 600;
   color: var(--color-grey-600);
-  
 `
 
 const StyledRow = styled(CommonRow)`
