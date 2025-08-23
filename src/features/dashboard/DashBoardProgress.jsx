@@ -1,7 +1,8 @@
-import { Card, Col, ConfigProvider, Progress, Row } from 'antd'
+import { Card, Col, ConfigProvider, Progress } from 'antd'
 import styled from 'styled-components'
 import Tag from '../../ui/Tag'
 import Heading from '../../ui/Heading'
+import Row from '../../ui/Row'
 
 const StyledDistribution = styled.div`
   background-color: var(--color-grey-0);
@@ -12,7 +13,15 @@ const StyledDistribution = styled.div`
   grid-column: 1/-1;
 `
 
-export default function DashBoardProgress() {
+export default function DashBoardProgress({ todos }) {
+  const totalWork = todos.length
+
+  const totalWorkHigh = todos.filter((todo) => todo.priority === 'high').length
+  const totalWorkMedium = todos.filter(
+    (todo) => todo.priority === 'medium'
+  ).length
+  const totalWorkLow = todos.filter((todo) => todo.priority === 'low').length
+
   return (
     <ConfigProvider
       theme={{
@@ -30,12 +39,33 @@ export default function DashBoardProgress() {
           title={<Heading as='h2'>Prioritization</Heading>}
           variant='borderless'
         >
-          <Tag type='red'>High</Tag>
-          <Progress percent={70} strokeColor='red' />
-          <Tag type='yellow'>Medium</Tag>
-          <Progress percent={20} strokeColor='#fef9c3' />
-          <Tag type='green'>Low</Tag>
-          <Progress percent={50} showInfo={false} />
+          <Row type='horizontal'>
+            <Tag type='red'>High</Tag>
+            <Heading as='h5'>{totalWorkHigh} tasks</Heading>
+          </Row>
+          <Progress
+            percent={(totalWorkHigh / totalWork) * 100}
+            strokeColor='red'
+            trailColor='var(--color-grey-300)'
+          />
+          <Row type='horizontal'>
+            <Tag type='yellow'>Medium</Tag>
+            <Heading as='h5'>{totalWorkMedium} tasks</Heading>
+          </Row>
+          <Progress
+            percent={(totalWorkMedium / totalWork) * 100}
+            strokeColor='#fef9c3'
+            trailColor='var(--color-grey-300)'
+          />
+          <Row type='horizontal'>
+            <Tag type='green'>Low</Tag>
+            <Heading as='h5'>{totalWorkLow} tasks</Heading>
+          </Row>
+          <Progress
+            percent={(totalWorkLow / totalWork) * 100}
+            strokeColor='#52c41a'
+            trailColor='var(--color-grey-300)'
+          />
         </Card>
       </StyledDistribution>
     </ConfigProvider>

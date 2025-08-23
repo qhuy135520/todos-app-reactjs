@@ -22,6 +22,8 @@ import { SearchTaskProvider } from './context/SearchTaskContext'
 import { Provider } from 'react-redux'
 import { store } from './store'
 import Calendar from './pages/Calendar'
+import { Suspense } from 'react'
+import Spinner from './ui/Spinner'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -39,34 +41,36 @@ export default function App() {
           <ReactQueryDevtools initialIsOpen={false} />
           <GlobalStyles />
           <BrowserRouter>
-            <Routes>
-              <Route
-                element={
-                  <ProtectedRoute>
-                    <AppLayout />
-                  </ProtectedRoute>
-                }
-              >
-                <Route index element={<Navigate replace to='dashboard' />} />
-                <Route index path='dashboard' element={<Dashboard />} />
-
+            <Suspense fallback={<Spinner />}>
+              <Routes>
                 <Route
-                  path='todos'
                   element={
-                    <SearchTaskProvider>
-                      <Todos />
-                    </SearchTaskProvider>
+                    <ProtectedRoute>
+                      <AppLayout />
+                    </ProtectedRoute>
                   }
-                />
+                >
+                  <Route index element={<Navigate replace to='dashboard' />} />
+                  <Route index path='dashboard' element={<Dashboard />} />
 
-                <Route path='categories' element={<Categories />} />
-                <Route path='account' element={<Account />} />
-                <Route path='calendar' element={<Calendar />} />
-              </Route>
-              <Route path='signup' element={<Signup />} />
-              <Route path='login' element={<Login />} />
-              <Route path='*' element={<PageNotFound />} />
-            </Routes>
+                  <Route
+                    path='todos'
+                    element={
+                      <SearchTaskProvider>
+                        <Todos />
+                      </SearchTaskProvider>
+                    }
+                  />
+
+                  <Route path='categories' element={<Categories />} />
+                  <Route path='account' element={<Account />} />
+                  <Route path='calendar' element={<Calendar />} />
+                </Route>
+                <Route path='signup' element={<Signup />} />
+                <Route path='login' element={<Login />} />
+                <Route path='*' element={<PageNotFound />} />
+              </Routes>
+            </Suspense>
           </BrowserRouter>
           <Toaster
             position='top-center'

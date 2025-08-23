@@ -7,9 +7,14 @@ import { HiOutlineListBullet } from 'react-icons/hi2'
 import { CgDanger } from 'react-icons/cg'
 
 import Stat from './Stat'
+import { compareAsc } from 'date-fns'
 
 export default function Stats({ todos }) {
-  console.log(todos)
+  const workCompleted = todos.filter((todo) => todo.isCompleted).length
+
+  const workOverdue = todos.filter(
+    (todo) => !todo.isCompleted && compareAsc(todo.dueDate, new Date()) === -1
+  ).length
 
   return (
     <>
@@ -17,22 +22,27 @@ export default function Stats({ todos }) {
         title='Total Work'
         color='blue'
         icon={<HiOutlineListBullet />}
-        value={12}
+        value={todos.length}
       />
       <Stat
         title='Finished Work'
         color='green'
         icon={<HiOutlineCheck />}
-        value={21}
+        value={workCompleted}
       />
       <Stat
         title='Waiting Work'
         color='yellow'
         icon={<HiOutlineClock />}
-        value={3}
+        value={todos.length - workCompleted}
       />
 
-      <Stat title='Overdue Work' color='red' icon={<CgDanger />} value={4} />
+      <Stat
+        title='Overdue Work'
+        color='red'
+        icon={<CgDanger />}
+        value={workOverdue}
+      />
     </>
   )
 }
