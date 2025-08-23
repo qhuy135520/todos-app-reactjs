@@ -1,6 +1,7 @@
 import { Alert, Card, Col, ConfigProvider, Row } from 'antd'
 import styled from 'styled-components'
 import Heading from '../../ui/Heading'
+import { format } from 'date-fns'
 
 const StyledDistribution = styled.div`
   background-color: var(--color-grey-0);
@@ -26,7 +27,18 @@ const Stacked = styled.div`
   }
 `
 
-export default function DashBoardDistribution() {
+export default function DashBoardDistribution({ todos }) {
+  const today = new Date()
+
+  const closestPastTodos = todos
+    .filter((todo) => new Date(todo.dueDate) <= today)
+    .map((todo) => ({
+      ...todo,
+      diff: Math.abs(today - new Date(todo.dueDate)),
+    }))
+    .sort((a, b) => a.diff - b.diff)
+    .slice(0, 3)
+
   return (
     <ConfigProvider
       theme={{
@@ -44,19 +56,30 @@ export default function DashBoardDistribution() {
           title={<Heading as='h2'>Deadline is coming</Heading>}
           variant='borderless'
         >
-          <Alert
-            message='Success Text'
-            description='Success Description '
-            type='success'
-          />
-          <br />
-          <Alert message='Warning Text' description='Warning ' type='warning' />
-          <br />
-          <Alert
-            message='Error Text'
-            description='Error Description '
-            type='error'
-          />
+          {closestPastTodos.map((item, index) => {
+            return (
+              <>
+                <Alert
+                  key={index}
+                  message={<strong>{item.title}</strong>}
+                  description={
+                    <span>
+                      <strong>Due Date</strong>:{' '}
+                      {format(item.dueDate, 'MMM dd yyyy')}
+                    </span>
+                  }
+                  type={`${
+                    item.priority === 'high'
+                      ? 'error'
+                      : item.priority === 'medium'
+                      ? 'warning'
+                      : 'success'
+                  }`}
+                />
+                <br />
+              </>
+            )
+          })}
         </Card>
       </StyledDistribution>
     </ConfigProvider>

@@ -1,13 +1,12 @@
 import styled from 'styled-components'
 import Stats from './Stats'
-import SalesChart from './SalesChart'
-import DurationChart from './DurationChart'
-import TodayActivity from './TodayActivity'
 import { useGetTodos } from '../todos/useGetTodos'
 import { useUser } from '../authentication/useUser'
 import Spinner from '../../ui/Spinner'
 import DashBoardDistribution from './DashBoardDistribution'
 import DashBoardProgress from './DashBoardProgress'
+import PriorityRadialChart from './PriorityRadialChart'
+import KanbanBoard from './KanbanBoard'
 
 const StyledDashboardLayout = styled.div`
   display: grid;
@@ -24,15 +23,18 @@ function DashBoardLayout() {
   } = useGetTodos(user?.id)
 
   if (isPendingTodos) return <Spinner />
+  console.log(todos)
 
   return (
-    <StyledDashboardLayout>
-      <Stats todos={todos} />
-      <DashBoardDistribution />
-      <DurationChart />
-      <DashBoardProgress />
-      <SalesChart />
-    </StyledDashboardLayout>
+    <>
+      <StyledDashboardLayout>
+        <Stats todos={todos} />
+        <DashBoardDistribution todos={todos} />
+        <PriorityRadialChart todos={todos} />
+        <DashBoardProgress todos={todos} />
+      </StyledDashboardLayout>
+      <KanbanBoard todos={todos} userId={user.id} />
+    </>
   )
 }
 

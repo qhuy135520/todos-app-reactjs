@@ -1,0 +1,193 @@
+/* --- Layout tổng thể --- */
+.kanban-wrap {
+  width: 100%;
+  padding: 20px;
+  background: #f9fafb;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.kanban-board {
+  display: flex;
+  gap: 20px;
+  height: 100%;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scroll-behavior: smooth;
+}
+
+/* --- Cột --- */
+.kanban-column {
+  flex: 1;
+  min-width: 280px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.kanban-column--over {
+  background: #e0f2fe;
+  transform: scale(1.02);
+}
+
+.kanban-column__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.kanban-column__head h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+  color: #1f2937;
+}
+
+.kanban-badge {
+  background: #3b82f6;
+  color: white;
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+/* --- Thẻ task --- */
+.kanban-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 12px;
+  cursor: grab;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.kanban-card:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.kanban-card:active {
+  cursor: grabbing;
+}
+
+/* --- Header task --- */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.card-title {
+  font-weight: 600;
+  font-size: 14px;
+  color: #111827;
+  flex: 1;
+  word-wrap: break-word;
+}
+
+.priority-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+/* --- Nội dung task --- */
+.card-desc {
+  font-size: 13px;
+  color: #4b5563;
+  margin-bottom: 8px;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.card-date {
+  font-size: 12px;
+  color: #6b7280;
+  text-align: right;
+}
+
+.card-date--danger {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+/* --- Scrollbar gọn nhẹ --- */
+.kanban-board::-webkit-scrollbar {
+  height: 6px;
+}
+
+.kanban-board::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.kanban-board::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* --- Responsive --- */
+@media (max-width: 1024px) {
+  .kanban-board {
+    gap: 15px;
+  }
+  .kanban-column {
+    min-width: 240px;
+    padding: 12px;
+  }
+  .kanban-column__head h2 {
+    font-size: 16px;
+  }
+  .kanban-card {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .kanban-wrap {
+    padding: 10px;
+  }
+  .kanban-board {
+    gap: 12px;
+  }
+  .kanban-column {
+    min-width: 200px;
+  }
+  .card-title {
+    font-size: 13px;
+  }
+  .card-desc {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .kanban-wrap {
+    padding: 5px;
+  }
+  .kanban-board {
+    gap: 10px;
+  }
+  .kanban-column {
+    min-width: 180px;
+    padding: 10px;
+  }
+  .kanban-column__head h2 {
+    font-size: 14px;
+  }
+  .kanban-card {
+    padding: 8px;
+    font-size: 12px;
+  }
+  .card-date {
+    font-size: 11px;
+  }
+}
