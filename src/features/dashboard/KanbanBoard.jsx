@@ -16,8 +16,18 @@ import { useDroppable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import '../../styles/KanbanBoard.css'
 import { useUpdateTodos } from '../todos/useUpdateTodo'
+import Heading from '../../ui/Heading'
+import styled from 'styled-components'
 
-// --- Column metadata: chỉ 2 cột ---
+const StyledKanbanBoard = styled.div`
+  background-color: var(--color-grey-0);
+  border: 1px solid var(--color-grey-100);
+  border-radius: var(--border-radius-md);
+  color: 'var(--color-grey-900)';
+  padding: 2.4rem 3.2rem;
+  grid-column: 1/-1;
+`
+
 const COLUMN_META = {
   todo: { title: 'To Do', bg: '#f5f7fa' },
   done: { title: 'Done', bg: '#ecfdf5' },
@@ -139,7 +149,6 @@ export default function KanbanBoard({ todos, userId }) {
     const fromIndex = fromItems.findIndex((i) => i.id === itemId)
     const [moved] = fromItems.splice(fromIndex, 1)
 
-    // Cập nhật trạng thái local
     moved.status = toId
     moved.isCompleted = toId === 'done'
     toItems.splice(toIndex, 0, moved)
@@ -150,7 +159,6 @@ export default function KanbanBoard({ todos, userId }) {
       [toId]: toItems,
     }))
 
-    // Gọi API cập nhật trạng thái
     updateTodo({
       taskID: moved.id,
       data: { isCompleted: moved.isCompleted },
@@ -189,22 +197,27 @@ export default function KanbanBoard({ todos, userId }) {
   }
 
   return (
-    <div className='kanban-wrap'>
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCorners}
-        onDragEnd={onDragEnd}
-      >
-        <div className='kanban-board'>
-          {Object.keys(COLUMN_META).map((colId) => (
-            <Column key={colId} id={colId} tasks={columns[colId]}>
-              {columns[colId].map((task) => (
-                <TaskCard key={task.id} task={task} columnId={colId} />
-              ))}
-            </Column>
-          ))}
-        </div>
-      </DndContext>
-    </div>
+    <StyledKanbanBoard>
+      <div className='kanban-wrap'>
+        <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>
+          📈 Kanban Board
+        </h2>
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCorners}
+          onDragEnd={onDragEnd}
+        >
+          <div className='kanban-board'>
+            {Object.keys(COLUMN_META).map((colId) => (
+              <Column key={colId} id={colId} tasks={columns[colId]}>
+                {columns[colId].map((task) => (
+                  <TaskCard key={task.id} task={task} columnId={colId} />
+                ))}
+              </Column>
+            ))}
+          </div>
+        </DndContext>
+      </div>
+    </StyledKanbanBoard>
   )
 }
