@@ -17,6 +17,16 @@ const StyledProgressOverTime = styled.div`
   color: 'var(--color-grey-900)';
   padding: 2.4rem 3.2rem;
   grid-column: 1/-1;
+
+  @media (max-width: 1200px) {
+    grid-column: span 2;
+    padding: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    grid-column: span 1;
+    padding: 1.6rem;
+  }
 `
 
 const groupTasksByDate = (tasks) => {

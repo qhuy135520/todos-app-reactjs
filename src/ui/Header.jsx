@@ -14,6 +14,10 @@ const StyledHeader = styled.header`
   align-items: center;
   justify-content: flex-end;
   z-index: 100;
+
+  @media (max-width: 476px) {
+    flex-direction: column;
+  }
 `
 
 export default function Header() {

@@ -11,8 +11,20 @@ import LoadingComponent from '../../ui/LoadingComponent'
 
 const StyledDashboardLayout = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 2.4rem;
+  padding: 1.6rem;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    padding: 0;
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+  }
 `
 
 function DashBoardLayout() {

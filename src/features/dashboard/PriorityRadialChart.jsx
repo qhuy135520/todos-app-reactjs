@@ -13,10 +13,20 @@ const ChartBox = styled.div`
   border: 1px solid var(--color-grey-100);
   border-radius: var(--border-radius-md);
   padding: 2.4rem 3.2rem;
-  grid-column: 3/-1;
+  grid-column: 3 / -1;
 
   & > *:first-child {
     margin-bottom: 1.6rem;
+  }
+
+  @media (max-width: 1200px) {
+    grid-column: span 2;
+    padding: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    grid-column: span 1;
+    padding: 1.6rem;
   }
 `
 

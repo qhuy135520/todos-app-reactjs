@@ -9,6 +9,11 @@ const Row = styled.div`
       justify-content: space-between;
       align-items: center;
       gap: 2rem;
+
+      @media (max-width: 1068px) {
+        flex-direction: column;
+        align-items: stretch;
+      }
     `}
 
   ${(props) =>

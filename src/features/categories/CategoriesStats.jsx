@@ -16,7 +16,12 @@ const StyledCategoriesStats = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 2.4rem;
+
+  @media (max-width: 1068px) {
+    grid-template-columns: 1fr;
+  }
 `
+
 export default function CategoriesStats({ categories }) {
   const countCategories = categories.length
   const countCategoriesActive = categories.filter(

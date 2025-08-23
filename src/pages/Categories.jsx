@@ -4,11 +4,19 @@ import CategoriesOperation from '../features/categories/CategoriesOperation'
 import Heading from '../ui/Heading'
 import CategoriesStats from '../features/categories/CategoriesStats'
 import Row from '../ui/Row'
-import Button from '../ui/Button'
+
 import CategoriesTable from '../features/categories/CategoriesTable'
 import Input from '../ui/Input'
 import AddCategories from '../features/categories/AddCategories'
 import LoadingComponent from '../ui/LoadingComponent'
+import styled from 'styled-components'
+
+const StyledSearchButton = styled.div`
+  @media (max-width: 1068px) {
+    width: 100%;
+    margin-bottom: 1.6rem;
+  }
+`
 
 export default function Categories() {
   const { categories, categoriesPerPage, status, error, handleSearch } =
@@ -25,17 +33,13 @@ export default function Categories() {
       </Row>
       <CategoriesStats categories={categories} />
       <Row type='horizontal'>
-        <div>
-          <Button variation='secondary' size='medium' disabled>
-            Search
-          </Button>
-          &nbsp;&nbsp;
+        <StyledSearchButton>
           <Input
             placeholder='Search category name'
             type='text'
             onChange={handleSearch}
           />
-        </div>
+        </StyledSearchButton>
 
         <CategoriesOperation />
       </Row>

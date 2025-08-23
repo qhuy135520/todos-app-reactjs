@@ -5,6 +5,7 @@ import { formatDistanceFromNow } from '../../utils/helpers'
 import Tag from '../../ui/Tag'
 import { format, isToday } from 'date-fns'
 import CategoriesActionsDrop from './CategoriesActionsDrop'
+import CategoriesTableRow from './CategoriesTableRow'
 
 const Name = styled.div`
   font-size: 1.6rem;
@@ -39,7 +40,7 @@ const statusToTagName = {
 
 export default function CategoryRow({ category }) {
   return (
-    <Table.Row>
+    <CategoriesTableRow.Row>
       <Name>{category.name}</Name>
       <span>{category.description}</span>
       <Stacked>
@@ -58,6 +59,6 @@ export default function CategoryRow({ category }) {
       </Tag>
       <Stacked>{format(new Date(category.createdAt), 'MMM dd yyyy')}</Stacked>
       <CategoriesActionsDrop category={category} />
-    </Table.Row>
+    </CategoriesTableRow.Row>
   )
 }
