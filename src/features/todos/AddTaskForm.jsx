@@ -9,6 +9,10 @@ import Select from '../../ui/Select'
 import { useUser } from '../authentication/useUser'
 import { useAddTodo } from './useAddTodo'
 import Heading from '../../ui/Heading'
+import { useSelector } from 'react-redux'
+import { selectAllCategories } from '../categories/categoriesSlice'
+import Checkbox from '../../ui/Checkbox'
+import supabase from '../../services/supabase'
 
 const options = [
   { value: 'low', label: 'Low' },
@@ -17,6 +21,8 @@ const options = [
 ]
 
 export default function AddTaskForm({ onCloseModal }) {
+  const allCategories = useSelector(selectAllCategories)
+  console.log(allCategories, 'add modal')
   const {
     control,
     register,
@@ -35,13 +41,14 @@ export default function AddTaskForm({ onCloseModal }) {
   const { user } = useUser()
   const { addTodo, isPending } = useAddTodo(user?.id)
 
-  function onSubmit(data) {
-    addTodo(data, {
-      onSuccess: () => {
-        reset()
-        onCloseModal()
-      },
-    })
+  async function onSubmit(formData) {
+    try {
+      await addTodo(formData)
+      reset()
+      onCloseModal()
+    } catch (err) {
+      console.error(err.message)
+    }
   }
 
   return (
@@ -96,6 +103,32 @@ export default function AddTaskForm({ onCloseModal }) {
                 id='priority'
                 disabled={isPending}
               />
+            )}
+          />
+        </FormRowVertical>
+
+        <FormRowVertical label='Category'>
+          <Controller
+            name='categories'
+            control={control}
+            render={({ field }) => (
+              <div>
+                {allCategories.map((cat) => (
+                  <Checkbox
+                    key={cat.id}
+                    checked={field.value?.includes(cat.id)}
+                    onChange={() => {
+                      const newValue = field.value?.includes(cat.id)
+                        ? field.value.filter((id) => id !== cat.id)
+                        : [...(field.value || []), cat.id]
+
+                      field.onChange(newValue)
+                    }}
+                  >
+                    {cat.name}
+                  </Checkbox>
+                ))}
+              </div>
             )}
           />
         </FormRowVertical>
