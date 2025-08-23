@@ -1,14 +1,5 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { useForm } from 'react-hook-form'
-import toast from 'react-hot-toast'
+import useCategories from '../../hooks/useCategories'
 
-import {
-  createCategory,
-  selectCategoriesStatus,
-  updateCategory,
-} from './categoriesSlice'
-
-import { useUser } from '../authentication/useUser'
 import FormRow from '../../ui/FormRow'
 import Input from '../../ui/Input'
 import Form from '../../ui/Form'
@@ -21,43 +12,8 @@ export default function CreateCategoriesForm({
   categoryEdit = {},
   onCloseModal,
 }) {
-  const dispatch = useDispatch()
-  const { user } = useUser()
-
-  const status = useSelector(selectCategoriesStatus)
-
-  const isPending = status === 'pending'
-
-  const { id: editId, ...editValues } = categoryEdit
-
-  const isEditSession = Boolean(editId)
-
-  const { register, handleSubmit, reset, formState } = useForm({
-    defaultValues: isEditSession ? editValues : {},
-  })
-
-  const { errors } = formState
-
-  function onSubmit(data) {
-    if (isEditSession) {
-      const dataUpdate = { ...data }
-      dispatch(
-        updateCategory({
-          categoryId: categoryEdit.id,
-          dataUpdate,
-          userId: user.id,
-        })
-      )
-      if (status === 'succeeded') toast.success('Updated Category successfully')
-      if (status === 'failed') toast.success('Updated Category failed')
-    } else {
-      dispatch(createCategory({ ...data, userId: user.id }))
-      if (status === 'succeeded') toast.success('Category created successfully')
-      if (status === 'failed') toast.error('Category created Failed')
-    }
-
-    reset()
-  }
+  const { isPending, isEditSession, register, handleSubmit, errors, onSubmit } =
+    useCategories(categoryEdit)
 
   function onError() {}
   return (

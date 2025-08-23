@@ -23,7 +23,7 @@ function UpdateUserDataForm() {
 
   const [fullName, setFullName] = useState(currentFullName)
   const [avatar, setAvatar] = useState(null)
-console.log(avatar)
+  console.log(avatar)
   function handleSubmit(e) {
     e.preventDefault()
     if (!fullName) return
@@ -46,7 +46,6 @@ console.log(avatar)
 
   return (
     <>
-      <Logo src/>
       <Form onSubmit={handleSubmit}>
         <FormRow label='Email address'>
           <Input value={email} disabled />
@@ -71,14 +70,14 @@ console.log(avatar)
         <FormRow>
           <Button
             type='reset'
-            $variation='secondary'
+            variation='secondary'
             size='medium'
             disabled={isUpdating}
             onClick={handleCancel}
           >
             Cancel
           </Button>
-          <Button $variation='primary' size='medium' disabled={isUpdating}>
+          <Button variation='primary' size='medium' disabled={isUpdating}>
             Update account
           </Button>
         </FormRow>

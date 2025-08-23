@@ -75,6 +75,17 @@ export default function DashBoardDistribution({ todos }) {
                       ? 'warning'
                       : 'success'
                   }`}
+                  style={{
+                    backgroundColor:
+                      item.priority === 'high'
+                        ? 'var(--color-red-100)'
+                        : item.priority === 'medium'
+                        ? 'var(--color-yellow-100)'
+                        : 'var(--color-green-100)',
+                    border: '1px solid #ccc',
+                    color: '#333',
+                    fontWeight: 500,
+                  }}
                 />
                 <br />
               </>

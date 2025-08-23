@@ -53,7 +53,7 @@ const categoriesSlice = createSlice({
       })
       .addCase(fetchCategories.rejected, (state, action) => {
         state.status = 'failed'
-        state.error = action.payload
+        state.error = action.error.message
       })
       .addCase(createCategory.pending, (state) => {
         state.status = 'pending'
@@ -71,7 +71,7 @@ const categoriesSlice = createSlice({
       })
       .addCase(createCategory.rejected, (state, action) => {
         state.status = 'failed'
-        state.error = action.payload
+        state.error = action.error.message
       })
       .addCase(deleteCategory.pending, (state, action) => {
         state.status = 'pending'
@@ -88,6 +88,7 @@ const categoriesSlice = createSlice({
       })
       .addCase(deleteCategory.rejected, (state, action) => {
         state.status = 'failed'
+        state.error = action.error.message
       })
       .addCase(updateCategory.pending, (state, action) => {
         state.status = 'pending'
@@ -104,6 +105,7 @@ const categoriesSlice = createSlice({
       })
       .addCase(updateCategory.rejected, (state, action) => {
         state.status = 'failed'
+        state.error = action.error.message
       })
   },
 })
@@ -111,42 +113,57 @@ const categoriesSlice = createSlice({
 export const fetchCategories = createAsyncThunk(
   'categories/fetchCategories',
   async (userId) => {
-    const { data, totalItems, totalPages } = await getCategories(userId)
-
-    return { data, totalItems, totalPages }
+    try {
+      const { data, totalItems, totalPages } = await getCategories(userId)
+      return { data, totalItems, totalPages }
+    } catch (error) {
+      throw error
+    }
   }
 )
 
 export const createCategory = createAsyncThunk(
   'categories/createCategory',
   async (userId) => {
-    const { data, totalItems, totalPages } = await createCategoryApi(userId)
+    try {
+      const { data, totalItems, totalPages } = await createCategoryApi(userId)
 
-    return { data, totalItems, totalPages }
+      return { data, totalItems, totalPages }
+    } catch (error) {
+      throw error
+    }
   }
 )
 export const deleteCategory = createAsyncThunk(
   'categories/deleteCategory',
   async ({ categoryId, userId }) => {
-    const { data, totalItems, totalPages } = await deleteCategoryApi(
-      categoryId,
-      userId
-    )
+    try {
+      const { data, totalItems, totalPages } = await deleteCategoryApi(
+        categoryId,
+        userId
+      )
 
-    return { data, totalItems, totalPages }
+      return { data, totalItems, totalPages }
+    } catch (error) {
+      throw error
+    }
   }
 )
 
 export const updateCategory = createAsyncThunk(
   'categories/updateCategory',
   async ({ categoryId, dataUpdate, userId }) => {
-    const { data, totalItems, totalPages } = await updateCategoryApi(
-      categoryId,
-      dataUpdate,
-      userId
-    )
+    try {
+      const { data, totalItems, totalPages } = await updateCategoryApi(
+        categoryId,
+        dataUpdate,
+        userId
+      )
 
-    return { data, totalItems, totalPages }
+      return { data, totalItems, totalPages }
+    } catch (error) {
+      throw error
+    }
   }
 )
 

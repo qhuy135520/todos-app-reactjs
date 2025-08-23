@@ -101,7 +101,7 @@ export default function AddTaskForm({ onCloseModal }) {
         </FormRowVertical>
 
         <FormRowVertical>
-          <Button $variation='primary' size='medium' disabled={isPending}>
+          <Button variation='primary' size='medium' disabled={isPending}>
             {isPending ? <SpinnerMini /> : 'Add Task'}
           </Button>
         </FormRowVertical>

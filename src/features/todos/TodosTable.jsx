@@ -15,7 +15,6 @@ import ButtonTodo from './ButtonTodo'
 import { useSearch } from '../../context/SearchTaskContext'
 
 export default function TodosTable() {
-
   const [searchParams] = useSearchParams()
   const { query } = useSearch()
 

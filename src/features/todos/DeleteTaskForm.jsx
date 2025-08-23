@@ -36,7 +36,7 @@ export default function DeleteTaskForm({ onCloseModal, data }) {
         </h2>
 
         <FormRowVertical>
-          <Button $variation='danger' size='medium' disabled={isPending}>
+          <Button variation='danger' size='medium' disabled={isPending}>
             {isPending ? <SpinnerMini /> : 'Delete'}
           </Button>
         </FormRowVertical>

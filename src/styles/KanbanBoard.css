@@ -1,8 +1,6 @@
-/* --- Layout tổng thể --- */
 .kanban-wrap {
   width: 100%;
-  padding: 20px;
-  background: #f9fafb;
+  background: var(--color-grey-100);
   box-sizing: border-box;
   overflow-x: hidden;
 }
@@ -16,11 +14,9 @@
   scroll-behavior: smooth;
 }
 
-/* --- Cột --- */
 .kanban-column {
   flex: 1;
   min-width: 280px;
-  background: #fff;
   border-radius: 12px;
   padding: 15px;
   display: flex;
@@ -45,7 +41,7 @@
   font-size: 18px;
   font-weight: bold;
   margin: 0;
-  color: #1f2937;
+  color: var(--color-grey-800);
 }
 
 .kanban-badge {
@@ -57,9 +53,9 @@
   font-weight: 500;
 }
 
-/* --- Thẻ task --- */
 .kanban-card {
-  background: #ffffff;
+  background: var(--color-grey-100);
+  color: var(--color-grey-600);
   border: 1px solid #e5e7eb;
   border-radius: 10px;
   padding: 12px;
@@ -78,7 +74,6 @@
   cursor: grabbing;
 }
 
-/* --- Header task --- */
 .card-header {
   display: flex;
   justify-content: space-between;
@@ -89,7 +84,6 @@
 .card-title {
   font-weight: 600;
   font-size: 14px;
-  color: #111827;
   flex: 1;
   word-wrap: break-word;
 }
@@ -100,10 +94,9 @@
   border-radius: 50%;
 }
 
-/* --- Nội dung task --- */
 .card-desc {
   font-size: 13px;
-  color: #4b5563;
+  color: var(--color-grey-500);
   margin-bottom: 8px;
   line-height: 1.4;
   word-break: break-word;
@@ -120,7 +113,6 @@
   font-weight: 600;
 }
 
-/* --- Scrollbar gọn nhẹ --- */
 .kanban-board::-webkit-scrollbar {
   height: 6px;
 }
@@ -134,7 +126,6 @@
   background: transparent;
 }
 
-/* --- Responsive --- */
 @media (max-width: 1024px) {
   .kanban-board {
     gap: 15px;

@@ -31,7 +31,7 @@ function ConfirmDelete({ resourceName, onConfirm, disabled, onCloseModal }) {
 
       <div>
         <Button
-          $variation='secondary'
+          variation='secondary'
           size='medium'
           disabled={disabled}
           onClick={onCloseModal}
@@ -39,7 +39,7 @@ function ConfirmDelete({ resourceName, onConfirm, disabled, onCloseModal }) {
           Cancel
         </Button>
         <Button
-          $variation='danger'
+          variation='danger'
           size='medium'
           disabled={disabled}
           onClick={onConfirm}

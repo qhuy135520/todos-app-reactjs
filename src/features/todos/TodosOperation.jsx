@@ -34,11 +34,15 @@ export default function TodosOperation() {
         ]}
       />
 
-      <Input value={query} onChange={(e) => setQuery(e.target.value)} placeholder='Search task...' />
+      <Input
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder='Search task...'
+      />
 
       <Modal>
         <Modal.Open opens='add-task'>
-          <ButtonTodo $variation='primary' size='medium' $justifyselfs='end'>
+          <ButtonTodo $variation='primary' size='medium' justifyselfs='end'>
             Add Task +
           </ButtonTodo>
         </Modal.Open>
