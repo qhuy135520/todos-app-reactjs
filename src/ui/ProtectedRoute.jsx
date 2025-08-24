@@ -3,6 +3,7 @@ import { useUser } from '../features/authentication/useUser'
 import Spinner from './Spinner'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
+import LoadingComponent from './LoadingComponent'
 
 const FullPage = styled.div`
   height: 100vh;
@@ -25,12 +26,6 @@ export default function ProtectedRoute({ children }) {
     [isAuthenticated, isPending, navigate]
   )
 
-  if (isPending)
-    return (
-      <FullPage>
-        <Spinner />
-      </FullPage>
-    )
-
-  if (isAuthenticated) return children
+  if (isAuthenticated)
+    return <LoadingComponent isLoading={isPending}>{children}</LoadingComponent>
 }

@@ -1,7 +1,7 @@
 import ErrorComponent from './ErrorComponent'
 import Spinner from './Spinner'
 
-function LoadingComponent({ children, isLoading, error = {} }) {
+function LoadingComponent({ children, isLoading, error = null }) {
   if (isLoading) {
     return <Spinner />
   }
