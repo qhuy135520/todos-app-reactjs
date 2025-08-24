@@ -1,13 +1,18 @@
 import { useDispatch, useSelector } from 'react-redux'
 import {
+  createCategory,
   selectAllCategories,
   selectCategoriesStatus,
   selectPaginatedCategories,
   setSearchTerm,
+  updateCategory,
 } from '../features/categories/categoriesSlice'
 import { useForm } from 'react-hook-form'
+import { useUser } from '../features/authentication/useUser'
 
 const useCategories = (categoryEdit = {}) => {
+  const { user } = useUser()
+
   const { id: editId, ...editValues } = categoryEdit
 
   const isEditSession = Boolean(editId)
