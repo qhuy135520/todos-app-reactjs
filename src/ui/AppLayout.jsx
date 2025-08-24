@@ -26,7 +26,7 @@ const Main = styled.main`
   grid-column: 2/-1;
 
   @media (max-width: 768px) {
-    padding: 0rem;
+    padding: 2rem;
     padding-top: 3rem;
     grid-column: 1;
   }
