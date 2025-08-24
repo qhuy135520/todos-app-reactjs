@@ -61,13 +61,7 @@ const categoriesSlice = createSlice({
 
       .addCase(createCategory.fulfilled, (state, action) => {
         state.status = 'succeeded'
-        state.items = action.payload.data
-        state.totalItems = action.payload.totalItems
-        state.totalPages = action.payload.totalPages
-        state.currentPage = 1
-        state.filter = 'all'
-        state.sortBy = 'createdAt-desc'
-        state.searchTerm = ''
+        handleResetItems(state, action)
       })
       .addCase(createCategory.rejected, (state, action) => {
         state.status = 'failed'
@@ -78,13 +72,7 @@ const categoriesSlice = createSlice({
       })
       .addCase(deleteCategory.fulfilled, (state, action) => {
         state.status = 'succeeded'
-        state.items = action.payload.data
-        state.totalItems = action.payload.totalItems
-        state.totalPages = action.payload.totalPages
-        state.currentPage = 1
-        state.filter = 'all'
-        state.sortBy = 'createdAt-desc'
-        state.searchTerm = ''
+        handleResetItems(state, action)
       })
       .addCase(deleteCategory.rejected, (state, action) => {
         state.status = 'failed'
@@ -95,13 +83,7 @@ const categoriesSlice = createSlice({
       })
       .addCase(updateCategory.fulfilled, (state, action) => {
         state.status = 'succeeded'
-        state.items = action.payload.data
-        state.totalItems = action.payload.totalItems
-        state.totalPages = action.payload.totalPages
-        state.currentPage = 1
-        state.filter = 'all'
-        state.sortBy = 'createdAt-desc'
-        state.searchTerm = ''
+        handleResetItems(state, action)
       })
       .addCase(updateCategory.rejected, (state, action) => {
         state.status = 'failed'
@@ -109,6 +91,16 @@ const categoriesSlice = createSlice({
       })
   },
 })
+
+const handleResetItems = (state, action) => {
+  state.items = action.payload.data
+  state.totalItems = action.payload.totalItems
+  state.totalPages = action.payload.totalPages
+  state.currentPage = 1
+  state.filter = 'all'
+  state.sortBy = 'createdAt-desc'
+  state.searchTerm = ''
+}
 
 export const fetchCategories = createAsyncThunk(
   'categories/fetchCategories',
