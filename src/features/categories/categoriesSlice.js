@@ -53,7 +53,7 @@ const categoriesSlice = createSlice({
       })
       .addCase(fetchCategories.rejected, (state, action) => {
         state.status = 'failed'
-        state.error = action.error.message
+        state.error = action.error
       })
       .addCase(createCategory.pending, (state) => {
         state.status = 'pending'
@@ -71,7 +71,7 @@ const categoriesSlice = createSlice({
       })
       .addCase(createCategory.rejected, (state, action) => {
         state.status = 'failed'
-        state.error = action.error.message
+        state.error = action.error
       })
       .addCase(deleteCategory.pending, (state, action) => {
         state.status = 'pending'
@@ -88,7 +88,7 @@ const categoriesSlice = createSlice({
       })
       .addCase(deleteCategory.rejected, (state, action) => {
         state.status = 'failed'
-        state.error = action.error.message
+        state.error = action.error
       })
       .addCase(updateCategory.pending, (state, action) => {
         state.status = 'pending'
@@ -105,7 +105,7 @@ const categoriesSlice = createSlice({
       })
       .addCase(updateCategory.rejected, (state, action) => {
         state.status = 'failed'
-        state.error = action.error.message
+        state.error = action.error
       })
   },
 })
