@@ -54,7 +54,7 @@ export default function DashBoardProgress({ todos }) {
             <Heading as='h5'>{totalWorkHigh} tasks</Heading>
           </Row>
           <Progress
-            percent={(totalWorkHigh / totalWork) * 100}
+            percent={Math.ceil((totalWorkHigh / totalWork) * 100)}
             strokeColor='red'
             trailColor='var(--color-grey-300)'
           />
@@ -63,7 +63,7 @@ export default function DashBoardProgress({ todos }) {
             <Heading as='h5'>{totalWorkMedium} tasks</Heading>
           </Row>
           <Progress
-            percent={(totalWorkMedium / totalWork) * 100}
+            percent={Math.ceil((totalWorkMedium / totalWork) * 100)}
             strokeColor='#fef9c3'
             trailColor='var(--color-grey-300)'
           />
@@ -72,7 +72,7 @@ export default function DashBoardProgress({ todos }) {
             <Heading as='h5'>{totalWorkLow} tasks</Heading>
           </Row>
           <Progress
-            percent={(totalWorkLow / totalWork) * 100}
+            percent={Math.ceil((totalWorkLow / totalWork) * 100)}
             strokeColor='#52c41a'
             trailColor='var(--color-grey-300)'
           />

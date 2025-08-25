@@ -83,18 +83,18 @@ const Empty = styled.p`
   margin: 2.4rem;
 `
 
-const TableContext = createContext()
+const TodoTableRowContext = createContext()
 
-function Table({ columns, children }) {
+function TodoTableRow({ columns, children }) {
   return (
-    <TableContext.Provider value={{ columns }}>
+    <TodoTableRowContext.Provider value={{ columns }}>
       <StyledTable role='table'>{children}</StyledTable>
-    </TableContext.Provider>
+    </TodoTableRowContext.Provider>
   )
 }
 
 function Header({ children }) {
-  const { columns } = useContext(TableContext)
+  const { columns } = useContext(TodoTableRowContext)
   return (
     <StyledHeader role='row' $columns={columns} as='header'>
       {children}
@@ -102,7 +102,7 @@ function Header({ children }) {
   )
 }
 function Row({ children, completed }) {
-  const { columns } = useContext(TableContext)
+  const { columns } = useContext(TodoTableRowContext)
   return (
     <StyledRow role='row' $columns={columns} $completed={completed}>
       {children}
@@ -116,9 +116,9 @@ function Body({ data, render }) {
   return <StyledBody>{data.map(render)}</StyledBody>
 }
 
-Table.Header = Header
-Table.Row = Row
-Table.Body = Body
-Table.Footer = Footer
+TodoTableRow.Header = Header
+TodoTableRow.Row = Row
+TodoTableRow.Body = Body
+TodoTableRow.Footer = Footer
 
-export default Table
+export default TodoTableRow

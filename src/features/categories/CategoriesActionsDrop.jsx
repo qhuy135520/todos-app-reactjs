@@ -86,23 +86,23 @@ export default function CategoriesActionsDrop({ category }) {
                   {category.isActive ? 'INACTIVE' : 'ACTIVE'}
                 </Menu.Item>
               </Modal.Open>
-              <Modal.Open opens='delete'>
+              {/* <Modal.Open opens='delete'>
                 <Menu.Item key='3' icon={<HiOutlineTrash />} danger>
                   Delete
                 </Menu.Item>
-              </Modal.Open>
+              </Modal.Open> */}
             </Menu>
-            <Modal.Window name='edit' size='large'>
+            <Modal.Window name='edit' size='medium'>
               <CreateCategoriesForm categoryEdit={category} />
             </Modal.Window>
-            <Modal.Window name='delete'>
+            {/* <Modal.Window name='delete'>
               <ConfirmAction
                 action='delete'
                 type='red'
                 resourceName={`Category #${category.name}`}
                 onConfirm={() => handleDeleteCategory()}
               />
-            </Modal.Window>
+            </Modal.Window> */}
             <Modal.Window name={`${category.isActive ? 'inactive' : 'active'}`}>
               <ConfirmAction
                 action={`${category.isActive ? 'INACTIVE' : 'ACTIVE'}`}

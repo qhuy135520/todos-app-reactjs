@@ -1,12 +1,12 @@
 import useCategories from '../../hooks/useCategories'
 
-import FormRow from '../../ui/FormRow'
 import Input from '../../ui/Input'
 import Form from '../../ui/Form'
 import Textarea from '../../ui/Textarea'
 import Heading from '../../ui/Heading'
 import Row from '../../ui/Row'
 import Button from '../../ui/Button'
+import FormRowVertical from '../../ui/FormRowVertical'
 
 export default function CreateCategoriesForm({
   categoryEdit = {},
@@ -25,7 +25,7 @@ export default function CreateCategoriesForm({
         <Row>
           <Heading as='h1'>Create a Category</Heading>
         </Row>
-        <FormRow label='Category name' error={errors?.name?.message}>
+        <FormRowVertical label='Category name' error={errors?.name?.message}>
           <Input
             disabled={isPending}
             type='text'
@@ -34,8 +34,11 @@ export default function CreateCategoriesForm({
               required: 'This field is required',
             })}
           />
-        </FormRow>
-        <FormRow label='Description' error={errors?.description?.message}>
+        </FormRowVertical>
+        <FormRowVertical
+          label='Description'
+          error={errors?.description?.message}
+        >
           <Textarea
             disabled={isPending}
             type='text'
@@ -45,8 +48,11 @@ export default function CreateCategoriesForm({
               required: 'This field is required',
             })}
           />
-        </FormRow>
-        <FormRow>
+        </FormRowVertical>
+        <FormRowVertical>
+          <Button variation='primary' size='medium' disabled={isPending}>
+            {isEditSession ? 'Update Category' : 'Create new Category'}
+          </Button>
           <Button
             disabled={isPending}
             variation='secondary'
@@ -56,10 +62,7 @@ export default function CreateCategoriesForm({
           >
             Cancel
           </Button>
-          <Button variation='primary' size='medium' disabled={isPending}>
-            {isEditSession ? 'Update Category' : 'Create new Category'}
-          </Button>
-        </FormRow>
+        </FormRowVertical>
       </Form>
     </>
   )

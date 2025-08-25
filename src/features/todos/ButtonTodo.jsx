@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 const sizes = {
   small: css`
     font-size: 1.2rem;
-    padding: 0.4rem 0.8rem;
+    padding: 0.4rem 1.5rem;
     text-transform: uppercase;
     font-weight: 600;
     text-align: center;
@@ -66,9 +66,13 @@ const ButtonTodo = styled.button`
   border: none;
   border-radius: var(--border-radius-sm);
   box-shadow: var(--shadow-sm);
+  min-width: 4.2rem;
   ${(props) => $justifyselfs[props.$justifyselfs]}
   ${(props) => sizes[props.size]}
   ${(props) => $variations[props.$variation]}
+  @media (max-width : 1068px) {
+    width: 100%;
+  }
 `
 
 ButtonTodo.defaultProps = {

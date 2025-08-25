@@ -2,17 +2,17 @@ import Button from '../../ui/Button'
 import Form from '../../ui/Form'
 import Input from '../../ui/Input'
 import FormRowVertical from '../../ui/FormRowVertical'
-import SpinnerMini from '../../ui/SpinnerMini'
-
-import { Controller, useForm } from 'react-hook-form'
 import Select from '../../ui/Select'
-import { useUser } from '../authentication/useUser'
-import { useAddTodo } from './useAddTodo'
 import Heading from '../../ui/Heading'
+import Checkbox from '../../ui/Checkbox'
+import useTodos from '../../hooks/useTodos'
+import LoadingComponent from '../../ui/LoadingComponent'
+
+import { Controller } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 import { selectAllCategories } from '../categories/categoriesSlice'
-import Checkbox from '../../ui/Checkbox'
-import supabase from '../../services/supabase'
+import { useState } from 'react'
+import { formatISO } from 'date-fns'
 
 const options = [
   { value: 'low', label: 'Low' },
@@ -20,42 +20,30 @@ const options = [
   { value: 'high', label: 'High' },
 ]
 
-export default function AddTaskForm({ onCloseModal }) {
+export default function CreateTaskForm({ onCloseModal, data = {} }) {
   const allCategories = useSelector(selectAllCategories)
-  console.log(allCategories, 'add modal')
+  const [newData, setNewData] = useState(data)
   const {
-    control,
+    isPending,
+    isEditSession,
     register,
     handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      title: '',
-      description: '',
-      isCompleted: false,
-      dueDate: '',
-      priority: 'medium',
-    },
-  })
-  const { user } = useUser()
-  const { addTodo, isPending } = useAddTodo(user?.id)
-
-  async function onSubmit(formData) {
-    try {
-      await addTodo(formData)
-      reset()
-      onCloseModal()
-    } catch (err) {
-      console.error(err.message)
-    }
-  }
+    errors,
+    onSubmit,
+    control,
+  } = useTodos(newData)
 
   return (
-    <>
+    <LoadingComponent isLoading={isPending} error={errors}>
       <Heading as='h4'>Add new Task</Heading>
-      <Form type='regular' onSubmit={handleSubmit(onSubmit)}>
-        <FormRowVertical label='Title' error={errors?.title?.message}>
+      <Form
+        type={onCloseModal ? 'modal' : 'regular'}
+        onSubmit={handleSubmit(async (data) => {
+          await onSubmit(data)
+          if (onCloseModal) onCloseModal()
+        })}
+      >
+        <FormRowVertical label='Title'>
           <Input
             type='text'
             id='title'
@@ -64,10 +52,7 @@ export default function AddTaskForm({ onCloseModal }) {
           />
         </FormRowVertical>
 
-        <FormRowVertical
-          label='Description'
-          error={errors?.description?.message}
-        >
+        <FormRowVertical label='Description'>
           <Input
             type='text'
             id='description'
@@ -78,7 +63,7 @@ export default function AddTaskForm({ onCloseModal }) {
           />
         </FormRowVertical>
 
-        <FormRowVertical label='Due Date' error={errors?.dueDate?.message}>
+        <FormRowVertical label='Due Date'>
           <Input
             type='date'
             id='dueDate'
@@ -88,8 +73,7 @@ export default function AddTaskForm({ onCloseModal }) {
             disabled={isPending}
           />
         </FormRowVertical>
-
-        <FormRowVertical label='Priority' error={errors?.priority?.message}>
+        <FormRowVertical label='Priority'>
           <Controller
             name='priority'
             control={control}
@@ -98,7 +82,7 @@ export default function AddTaskForm({ onCloseModal }) {
               <Select
                 options={options}
                 value={field.value}
-                onChange={(e) => field.onChange(e.target.value)}
+                onChange={(selected) => field.onChange(selected)}
                 type='white'
                 id='priority'
                 disabled={isPending}
@@ -113,32 +97,43 @@ export default function AddTaskForm({ onCloseModal }) {
             control={control}
             render={({ field }) => (
               <div>
-                {allCategories.map((cat) => (
-                  <Checkbox
-                    key={cat.id}
-                    checked={field.value?.includes(cat.id)}
-                    onChange={() => {
-                      const newValue = field.value?.includes(cat.id)
-                        ? field.value.filter((id) => id !== cat.id)
-                        : [...(field.value || []), cat.id]
-
-                      field.onChange(newValue)
-                    }}
-                  >
-                    {cat.name}
-                  </Checkbox>
-                ))}
+                {allCategories.map(
+                  (cat) =>
+                    cat.isActive && (
+                      <Checkbox
+                        key={cat.id}
+                        checked={field.value?.includes(cat.id) || false}
+                        onChange={() => {
+                          const newValue = field.value?.includes(cat.id)
+                            ? field.value.filter((id) => id !== cat.id)
+                            : [...(field.value || []), cat.id]
+                          field.onChange(newValue)
+                          setNewData((data) => ({
+                            ...data,
+                            todo_categories: newValue,
+                          }))
+                        }}
+                      >
+                        {cat.name}
+                      </Checkbox>
+                    )
+                )}
               </div>
             )}
           />
         </FormRowVertical>
 
         <FormRowVertical>
-          <Button variation='primary' size='medium' disabled={isPending}>
-            {isPending ? <SpinnerMini /> : 'Add Task'}
+          <Button
+            type='submit'
+            variation='primary'
+            size='medium'
+            disabled={isPending}
+          >
+            {isEditSession ? 'Update Todo' : 'Create new Todo'}
           </Button>
         </FormRowVertical>
       </Form>
-    </>
+    </LoadingComponent>
   )
 }

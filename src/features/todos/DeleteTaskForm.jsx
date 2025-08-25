@@ -4,36 +4,26 @@ import FormRowVertical from '../../ui/FormRowVertical'
 import SpinnerMini from '../../ui/SpinnerMini'
 import Heading from '../../ui/Heading'
 
-import { useForm } from 'react-hook-form'
-import { useEffect } from 'react'
-import { useDeleteTodo } from './useDeleteTodo'
 import { useUser } from '../authentication/useUser'
+import { useDispatch } from 'react-redux'
+import { deleteTodoSlice } from './todosSlice'
+import useTodos from '../../hooks/useTodos'
 
 export default function DeleteTaskForm({ onCloseModal, data }) {
-  const { handleSubmit, reset } = useForm()
+  const dispatch = useDispatch()
   const { user } = useUser()
+  const { isPending } = useTodos()
 
-  const { deleteTodo, isPending } = useDeleteTodo(user?.id)
-
-  function onSubmit(data) {
-    deleteTodo(data.id, {
-      onSuccess: () => {
-        onCloseModal()
-      },
-    })
+  const handleSubmit = () => {
+    dispatch(deleteTodoSlice({ userID: user.id, todoID: data.id }))
+    onCloseModal()
   }
-
-  useEffect(() => {
-    reset(data)
-  }, [data, reset])
 
   return (
     <>
-      <Heading as='h4'>Delete Task</Heading>
-      <Form type='regular' onSubmit={handleSubmit(onSubmit)}>
-        <h2>
-          Confirm delete <b>{data.title}</b>?
-        </h2>
+      <Heading as='h4'>Delete Task #{data.title}</Heading>
+      <Form type='regular' onSubmit={handleSubmit}>
+        <Heading as='h5'>Confirm delete {data.title}?</Heading>
 
         <FormRowVertical>
           <Button variation='danger' size='medium' disabled={isPending}>

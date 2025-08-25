@@ -1,8 +1,16 @@
 import { Badge, Calendar, ConfigProvider } from 'antd'
+import Modal from '../../ui/Modal'
 import dayjs from 'dayjs'
 import Tag from '../../ui/Tag'
+import { formatISO } from 'date-fns'
+import CreateTaskForm from '../todos/CreateTaskForm'
+import ButtonTodo from '../todos/ButtonTodo'
+import { useRef, useState } from 'react'
 
 const WorkSchedule = ({ todos }) => {
+  const [data, setData] = useState({})
+  const openBtnRef = useRef(null)
+
   const getListData = (value) => {
     return todos
       .filter((todo) => dayjs(todo.dueDate).isSame(value, 'day'))
@@ -42,6 +50,15 @@ const WorkSchedule = ({ todos }) => {
     return info.originNode
   }
 
+  function handleSelect(date) {
+    if (openBtnRef.current) {
+      setData((data) => {
+        openBtnRef.current.click()
+        return { ...data, dueDate: date.$d }
+      })
+    }
+  }
+
   return (
     <ConfigProvider
       theme={{
@@ -54,7 +71,23 @@ const WorkSchedule = ({ todos }) => {
         },
       }}
     >
-      <Calendar cellRender={cellRender} />
+      <Modal>
+        <Modal.Open opens='add-task'>
+          <ButtonTodo
+            $variation='primary'
+            size='medium'
+            justifyselfs='end'
+            ref={openBtnRef}
+            style={{ display: 'none' }}
+          >
+            Add Task +
+          </ButtonTodo>
+        </Modal.Open>
+        <Modal.Window name='add-task'>
+          <CreateTaskForm data={data} onClose={() => setIsOpen(false)} />
+        </Modal.Window>
+      </Modal>
+      <Calendar cellRender={cellRender} onSelect={handleSelect} />
     </ConfigProvider>
   )
 }

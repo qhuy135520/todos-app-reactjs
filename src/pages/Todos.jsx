@@ -1,10 +1,8 @@
-import ModalAddTodo from '../features/todos/ModalAddTodo'
+
 import TodosOperation from '../features/todos/TodosOperation'
 import TodosTable from '../features/todos/TodosTable'
-import Button from '../ui/Button'
 import Heading from '../ui/Heading'
 import Row from '../ui/Row'
-import TableOperations from '../ui/TableOperations'
 
 export default function Todos() {
   return (
