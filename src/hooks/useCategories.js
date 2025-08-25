@@ -9,6 +9,7 @@ import {
 } from '../features/categories/categoriesSlice'
 import { useForm } from 'react-hook-form'
 import { useUser } from '../features/authentication/useUser'
+import toast from 'react-hot-toast'
 
 const useCategories = (categoryEdit = {}) => {
   const { user } = useUser()

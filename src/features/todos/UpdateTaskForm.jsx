@@ -24,18 +24,11 @@ export default function UpdateTaskForm({ onCloseModal, data }) {
     ...data,
     todo_categories: data.todo_categories.map((c) => c.categories.id),
   }
-  const {
-    register,
-    handleSubmit,
-    errors,
-    onSubmit,
-    control,
-    isEditSession,
-    isPending,
-  } = useTodos(newData)
+  const { register, handleSubmit, errors, onSubmit, control, isPending } =
+    useTodos(newData)
 
   return (
-    <>
+    <LoadingComponent isLoading={isPending}>
       <Heading as='h4'>Add new Task</Heading>
       <Form
         type={onCloseModal ? 'modal' : 'regular'}
@@ -122,14 +115,14 @@ export default function UpdateTaskForm({ onCloseModal, data }) {
         <FormRowVertical>
           <Button
             type='submit'
-            $variation='primary'
+            variation='primary'
             size='medium'
             disabled={isPending}
           >
-            Create new Todo
+            Update Todos
           </Button>
         </FormRowVertical>
       </Form>
-    </>
+    </LoadingComponent>
   )
 }

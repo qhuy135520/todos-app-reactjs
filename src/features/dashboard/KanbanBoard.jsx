@@ -20,6 +20,8 @@ import { CSS } from '@dnd-kit/utilities'
 import '../../styles/KanbanBoard.css'
 import { format } from 'date-fns'
 import useTodos from '../../hooks/useTodos'
+import { useDispatch } from 'react-redux'
+import { updateTodoSlice } from '../todos/todosSlice'
 
 const StyledKanbanBoard = styled.div`
   background-color: var(--color-grey-0);
@@ -121,7 +123,7 @@ function Column({ id, tasks, children }) {
 }
 
 export default function KanbanBoard({ todos, userId }) {
-  const { handleSubmit } = useTodos(todos)
+  const dispatch = useDispatch()
 
   const initial = useMemo(() => {
     const grouped = { todo: [], done: [] }
@@ -164,10 +166,13 @@ export default function KanbanBoard({ todos, userId }) {
       [toId]: toItems,
     }))
 
-    handleSubmit({
-      taskID: moved.id,
-      data: { isCompleted: moved.isCompleted },
-    })
+    dispatch(
+      updateTodoSlice({
+        userID: userId,
+        taskID: moved.id,
+        dataUpdate: { isCompleted: moved.isCompleted },
+      })
+    )
   }
 
   const onDragEnd = ({ active, over }) => {

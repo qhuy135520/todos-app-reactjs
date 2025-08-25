@@ -34,7 +34,7 @@ export default function CreateTaskForm({ onCloseModal, data = {} }) {
   } = useTodos(newData)
 
   return (
-    <>
+    <LoadingComponent isLoading={isPending}>
       <Heading as='h4'>Add new Task</Heading>
       <Form
         type={onCloseModal ? 'modal' : 'regular'}
@@ -43,7 +43,7 @@ export default function CreateTaskForm({ onCloseModal, data = {} }) {
           if (onCloseModal) onCloseModal()
         })}
       >
-        <FormRowVertical label='Title'>
+        <FormRowVertical label='Title' error={errors?.title?.message}>
           <Input
             type='text'
             id='title'
@@ -52,7 +52,10 @@ export default function CreateTaskForm({ onCloseModal, data = {} }) {
           />
         </FormRowVertical>
 
-        <FormRowVertical label='Description'>
+        <FormRowVertical
+          label='Description'
+          error={errors?.description?.message}
+        >
           <Input
             type='text'
             id='description'
@@ -63,7 +66,7 @@ export default function CreateTaskForm({ onCloseModal, data = {} }) {
           />
         </FormRowVertical>
 
-        <FormRowVertical label='Due Date'>
+        <FormRowVertical label='Due Date' error={errors?.dueDate?.message}>
           <Input
             type='date'
             id='dueDate'
@@ -73,7 +76,7 @@ export default function CreateTaskForm({ onCloseModal, data = {} }) {
             disabled={isPending}
           />
         </FormRowVertical>
-        <FormRowVertical label='Priority'>
+        <FormRowVertical label='Priority' error={errors?.priority?.message}>
           <Controller
             name='priority'
             control={control}
@@ -134,6 +137,6 @@ export default function CreateTaskForm({ onCloseModal, data = {} }) {
           </Button>
         </FormRowVertical>
       </Form>
-    </>
+    </LoadingComponent>
   )
 }

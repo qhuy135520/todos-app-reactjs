@@ -52,14 +52,13 @@ export async function createTodo(userId, todo, categoryIds) {
       if (addCateErr) throw addCateErr
     }
 
-    const { data, totalItems, totalPages } = await getTodo(userId)
-    return { data, totalItems, totalPages }
+    return newTodo
   } catch (err) {
     throw new Error(err.message)
   }
 }
 
-export async function updateTodo(userID, taskID, dataUpdate) {
+export async function updateTodo(taskID, dataUpdate) {
   try {
     const {
       categoriesUpdate = [],
@@ -82,7 +81,6 @@ export async function updateTodo(userID, taskID, dataUpdate) {
         .eq('id', taskID)
         .select()
       if (error) throw new Error(error.message)
-
       if (categoriesUpdate) {
         await supabase.from('todo_categories').delete().eq('todoId', taskID)
         if (categoriesUpdate.length > 0) {
@@ -96,31 +94,27 @@ export async function updateTodo(userID, taskID, dataUpdate) {
           if (insertError) throw new Error(insertError.message)
         }
       }
-
-      const { data, totalItems, totalPages } = await getTodo(userID)
-      return { data, totalItems, totalPages }
     }
   } catch (err) {
     throw err
   }
 }
 
-export async function deleteTodo(userID, taskID) {
-  await supabase.from('todo_categories').delete().eq('todoId', taskID)
+export async function deleteTodo(taskID) {
+  try {
+    const { data, error: errorTodoCategories } = await supabase
+      .from('todo_categories')
+      .delete()
+      .eq('todoId', taskID)
 
-  const { error } = await supabase.from('todos').delete().eq('id', taskID)
-  if (error) throw new Error(error.message)
+    if (errorTodoCategories) throw errorTodoCategories
 
-  const { data, totalItems, totalPages } = await getTodo(userID)
-  return { data, totalItems, totalPages }
+    const { error } = await supabase.from('todos').delete().eq('id', taskID)
+
+    if (error) throw new Error(error.message)
+
+    return data
+  } catch (error) {
+    throw error
+  }
 }
-
-// export async function getCategoriesFromTask(taskID) {
-//   const { data, error } = await supabase
-//     .from('todo_categories')
-//     .select('categories(id, name)')
-//     .eq('todoId', taskID)
-
-//   if (error) throw new Error(error.message)
-//   return data
-// }

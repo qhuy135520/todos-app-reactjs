@@ -51,7 +51,9 @@ const WorkSchedule = ({ todos }) => {
   }
 
   function handleSelect(date) {
-    if (openBtnRef.current) {
+    const activeElement = document.activeElement.classList.value
+
+    if (activeElement === 'ant-picker-panel' && openBtnRef.current) {
       setData((data) => {
         openBtnRef.current.click()
         return { ...data, dueDate: date.$d }
