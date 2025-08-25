@@ -6,7 +6,9 @@ function LoadingComponent({ children, isLoading, error = null }) {
     return <Spinner />
   }
 
-  if (error) return <ErrorComponent message={error.message} />
+  if (error) {
+    return <ErrorComponent message={error.message} />
+  }
 
   return children
 }

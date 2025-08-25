@@ -1,5 +1,4 @@
 import { Badge, Space } from 'antd'
-import { useUser } from '../features/authentication/useUser'
 import WorkSchedule from '../features/calendar/WorkSchedule'
 import Heading from '../ui/Heading'
 import Row from '../ui/Row'
@@ -7,7 +6,6 @@ import LoadingComponent from '../ui/LoadingComponent'
 import useTodos from '../hooks/useTodos'
 
 export default function Calendar() {
-  const { user } = useUser()
   const { isPending, todos, error } = useTodos()
 
   return (

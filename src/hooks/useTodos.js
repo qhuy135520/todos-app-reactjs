@@ -9,14 +9,12 @@ import {
   updateTodoSlice,
 } from '../features/todos/todosSlice'
 import { useForm } from 'react-hook-form'
-import { updateTodo } from '../services/apiTodos'
 import { useUser } from '../features/authentication/useUser'
 import toast from 'react-hot-toast'
-import { useEffect } from 'react'
-import { formatISO } from 'date-fns'
 
 const useTodos = (todoEdit = {}) => {
   const { user } = useUser()
+
   const { id: editTodoId, todo_categories = [], ...editValues } = todoEdit
   const isEditSession = Boolean(editTodoId)
   const dispatch = useDispatch()

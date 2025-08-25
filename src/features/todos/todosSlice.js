@@ -1,6 +1,11 @@
 import { createAsyncThunk, createSlice, createSelector } from '@reduxjs/toolkit'
 import { PAGE_SIZE } from '../../utils/constants'
-import { createTodo, deleteTodo, getTodo, updateTodo } from '../../services/apiTodos'
+import {
+  createTodo,
+  deleteTodo,
+  getTodo,
+  updateTodo,
+} from '../../services/apiTodos'
 
 const initialState = {
   items: [],
@@ -33,13 +38,8 @@ export const createTodoSlice = createAsyncThunk(
   'todos/createTodoSlice',
   async ({ userId, todo, categoriesIds }, { dispatch }) => {
     try {
-      const { data, totalItems, totalPages } = await createTodo(
-        userId,
-        todo,
-        categoriesIds
-      )
+      await createTodo(userId, todo, categoriesIds)
       dispatch(fetchTodosSlice(userId))
-      return { data, totalItems, totalPages }
     } catch (err) {
       throw err
     }
@@ -50,9 +50,8 @@ export const deleteTodoSlice = createAsyncThunk(
   'todos/deleteTodoSlice',
   async ({ userID, todoID }, { dispatch }) => {
     try {
-      const { data, totalItems, totalPages } = await deleteTodo(userID,todoID)
-      dispatch(fetchTodosSlice(userID))    
-      return { data, totalItems, totalPages }
+      await deleteTodo(todoID)
+      dispatch(fetchTodosSlice(userID))
     } catch (err) {
       throw err
     }
@@ -63,13 +62,9 @@ export const updateTodoSlice = createAsyncThunk(
   'todos/updateTodoSlice',
   async ({ userID, taskID, dataUpdate }, { dispatch }) => {
     try {
-      const { data, totalItems, totalPages } = await updateTodo(
-        userID,
-        taskID,
-        dataUpdate
-      )
+      await updateTodo(taskID, dataUpdate)
+
       dispatch(fetchTodosSlice(userID))
-      return { data, totalItems, totalPages }
     } catch (err) {
       throw err
     }
