@@ -31,7 +31,9 @@ function ConfirmAction({
 }) {
   return (
     <StyledConfirmAction>
-      <Heading as='h3'>Delete {resourceName}</Heading>
+      <Heading as='h3'>
+        {action} {resourceName}
+      </Heading>
       <p>
         Are you sure you want to <Tag type={type}>{action.toUpperCase()}</Tag>{' '}
         this {resourceName} permanently?

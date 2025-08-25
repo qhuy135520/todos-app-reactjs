@@ -2,18 +2,15 @@ import Button from '../../ui/Button'
 import Form from '../../ui/Form'
 import Input from '../../ui/Input'
 import FormRowVertical from '../../ui/FormRowVertical'
-import SpinnerMini from '../../ui/SpinnerMini'
 import Select from '../../ui/Select'
 import Heading from '../../ui/Heading'
-
-import { Controller, useForm } from 'react-hook-form'
-import { useUser } from '../authentication/useUser'
-import { useEffect, useState } from 'react'
-import { useUpdateTodos } from './useUpdateTodo'
 import Checkbox from '../../ui/Checkbox'
+import LoadingComponent from '../../ui/LoadingComponent'
+
+import { Controller } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 import { selectAllCategories } from '../categories/categoriesSlice'
-import supabase from '../../services/supabase'
+import useTodos from '../../hooks/useTodos'
 
 const options = [
   { value: 'low', label: 'Low' },
@@ -22,43 +19,31 @@ const options = [
 ]
 
 export default function UpdateTaskForm({ onCloseModal, data }) {
-  const { control, register, handleSubmit, reset } = useForm()
-  const { user } = useUser()
-  const { isPending, updateTodoAsync } = useUpdateTodos(user?.id)
-
   const allCategories = useSelector(selectAllCategories)
-
-  async function onSubmit(dataNew) {
-    try {
-      await updateTodoAsync({
-        taskID: dataNew.id,
-        data: {
-          title: dataNew.title,
-          description: dataNew.description,
-          dueDate: dataNew.dueDate,
-          priority: dataNew.priority,
-          categories: dataNew.categories, 
-        },
-      })
-      onCloseModal()
-    } catch (error) {
-      console.error('Lỗi khi update todo:', error.message)
-    }
+  const newData = {
+    ...data,
+    todo_categories: data.todo_categories.map((c) => c.categories.id),
   }
+  const {
+    register,
+    handleSubmit,
+    errors,
+    onSubmit,
+    control,
+    isEditSession,
+    isPending,
+  } = useTodos(newData)
 
-  useEffect(() => {
-    if (data) {
-      reset({
-        ...data,
-        categories: data.categories.map((c) => c.categories.id), 
-      })
-    }
-  }, [data, reset])
-  if (!allCategories) return 'rong'
   return (
-    <>
-      <Heading as='h4'>Update Task</Heading>
-      <Form type='regular' onSubmit={handleSubmit(onSubmit)}>
+    <LoadingComponent isLoading={isPending} error={errors}>
+      <Heading as='h4'>Add new Task</Heading>
+      <Form
+        type={onCloseModal ? 'modal' : 'regular'}
+        onSubmit={handleSubmit(async (data) => {
+          await onSubmit(data)
+          if (onCloseModal) onCloseModal()
+        })}
+      >
         <FormRowVertical label='Title'>
           <Input
             type='text'
@@ -89,7 +74,6 @@ export default function UpdateTaskForm({ onCloseModal, data }) {
             disabled={isPending}
           />
         </FormRowVertical>
-
         <FormRowVertical label='Priority'>
           <Controller
             name='priority'
@@ -99,7 +83,7 @@ export default function UpdateTaskForm({ onCloseModal, data }) {
               <Select
                 options={options}
                 value={field.value}
-                onChange={(e) => field.onChange(e.target.value)}
+                onChange={(selected) => field.onChange(selected)}
                 type='white'
                 id='priority'
                 disabled={isPending}
@@ -113,32 +97,39 @@ export default function UpdateTaskForm({ onCloseModal, data }) {
             control={control}
             render={({ field }) => (
               <div>
-                {allCategories.map((cat) => (
-                  <Checkbox
-                    key={cat.id}
-                    checked={field.value?.includes(cat.id)}
-                    onChange={() => {
-                      const newValue = field.value?.includes(cat.id)
-                        ? field.value.filter((id) => id !== cat.id)
-                        : [...(field.value || []), cat.id]
-
-                      field.onChange(newValue)
-                    }}
-                  >
-                    {cat.name}
-                  </Checkbox>
-                ))}
+                {allCategories.map(
+                  (cat) =>
+                    cat.isActive && (
+                      <Checkbox
+                        key={cat.id}
+                        checked={field.value?.includes(cat.id) || false}
+                        onChange={() => {
+                          const newValue = field.value?.includes(cat.id)
+                            ? field.value.filter((id) => id !== cat.id)
+                            : [...(field.value || []), cat.id]
+                          field.onChange(newValue)
+                        }}
+                      >
+                        {cat.name}
+                      </Checkbox>
+                    )
+                )}
               </div>
             )}
           />
         </FormRowVertical>
 
         <FormRowVertical>
-          <Button $variation='primary' size='medium' disabled={isPending}>
-            {isPending ? <SpinnerMini /> : 'Update'}
+          <Button
+            type='submit'
+            $variation='primary'
+            size='medium'
+            disabled={isPending}
+          >
+            Create new Todo
           </Button>
         </FormRowVertical>
       </Form>
-    </>
+    </LoadingComponent>
   )
 }

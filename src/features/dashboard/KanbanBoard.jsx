@@ -17,10 +17,9 @@ import {
 } from '@dnd-kit/sortable'
 import { useDroppable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
-
-import { useUpdateTodos } from '../todos/useUpdateTodo'
 import '../../styles/KanbanBoard.css'
 import { format } from 'date-fns'
+import useTodos from '../../hooks/useTodos'
 
 const StyledKanbanBoard = styled.div`
   background-color: var(--color-grey-0);
@@ -122,7 +121,7 @@ function Column({ id, tasks, children }) {
 }
 
 export default function KanbanBoard({ todos, userId }) {
-  const { updateTodo } = useUpdateTodos(userId)
+  const { handleSubmit } = useTodos(todos)
 
   const initial = useMemo(() => {
     const grouped = { todo: [], done: [] }
@@ -165,7 +164,7 @@ export default function KanbanBoard({ todos, userId }) {
       [toId]: toItems,
     }))
 
-    updateTodo({
+    handleSubmit({
       taskID: moved.id,
       data: { isCompleted: moved.isCompleted },
     })

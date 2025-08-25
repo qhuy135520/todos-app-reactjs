@@ -1,8 +1,8 @@
 import Menus from '../../ui/Menus'
 import CategoryRow from './CategoryRow'
 import { useSelector } from 'react-redux'
-import { selectPagination } from './categoriesSlice'
-import CategoriesPagination from './CategoriesPagination'
+import { selectPagination, setPage } from './categoriesSlice'
+import PaginationTable from '../../ui/PaginationTable'
 import CategoriesTableRow from './CategoriesTableRow'
 
 export default function CategoriesTable({ categories }) {
@@ -27,11 +27,12 @@ export default function CategoriesTable({ categories }) {
           )}
         ></CategoriesTableRow.Body>
         <CategoriesTableRow.Footer>
-          <CategoriesPagination
+          <PaginationTable
             totalItems={totalItems}
             currentPage={currentPage}
             totalPages={totalPages}
             limit={limit}
+            setPage={setPage}
           />
         </CategoriesTableRow.Footer>
       </CategoriesTableRow>

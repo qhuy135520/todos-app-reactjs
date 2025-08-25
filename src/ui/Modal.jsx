@@ -16,6 +16,19 @@ const StyledModal = styled.div`
   transition: all 0.5s;
   width: ${({ size }) =>
     size === 'small' ? '30rem' : size === 'large' ? '88rem' : '50rem'};
+
+  @media (max-width: 1068px) {
+    /* max-height: ${(props) => {
+      return props.name === 'delete-task' ? '40vh' : '80vh'
+    }}; */
+    max-height: 80vh;
+    height: fit-content;
+    overflow-y: scroll;
+  }
+
+  @media (max-width: 412px) {
+    width: 90%;
+  }
 `
 
 const Overlay = styled.div`
@@ -26,7 +39,7 @@ const Overlay = styled.div`
   height: 100vh;
   background-color: var(--backdrop-color);
   backdrop-filter: blur(4px);
-  z-index: 1000;
+  z-index: 999999999999;
   transition: all 0.5s;
 `
 
@@ -84,7 +97,7 @@ function Window({ children, name, size }) {
 
   return createPortal(
     <Overlay>
-      <StyledModal ref={ref} size={size}>
+      <StyledModal ref={ref} size={size} name={name}>
         <Button onClick={close}>
           <HiXMark />
         </Button>

@@ -1,9 +1,6 @@
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2'
-import { useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
-import { PAGE_SIZE } from '../../utils/constants'
 import { useDispatch } from 'react-redux'
-import { setPage } from './categoriesSlice'
 
 const StyledPagination = styled.div`
   width: 100%;
@@ -61,7 +58,13 @@ const PaginationButton = styled.button`
   }
 `
 
-function CategoriesPagination({ totalItems, currentPage, totalPages, limit }) {
+function CategoriesPagination({
+  totalItems,
+  currentPage,
+  totalPages,
+  limit,
+  setPage,
+}) {
   const dispatch = useDispatch()
 
   function nextPage() {
