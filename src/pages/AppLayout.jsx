@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom'
-import Sidebar from './Sidebar'
-import Header from './Header'
+import Sidebar from '../ui/Sidebar'
+import Header from '../ui/Header'
 import styled from 'styled-components'
 import { useUser } from '../features/authentication/useUser'
 import { useDispatch } from 'react-redux'
@@ -28,7 +28,7 @@ const Main = styled.main`
   grid-column: 2/-1;
 
   @media (max-width: 768px) {
-    padding: 0rem;
+    padding: 2rem;
     padding-top: 3rem;
     grid-column: 1;
   }

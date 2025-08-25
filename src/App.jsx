@@ -1,29 +1,27 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import GlobalStyles from './styles/GlobalStyles'
-
-import Dashboard from './pages/Dashboard'
-
-import Login from './pages/Login'
-import PageNotFound from './pages/PageNotFound'
-import Account from './pages/Account'
-import Users from './pages/Users'
-
-import AppLayout from './ui/AppLayout'
-import { Toaster } from 'react-hot-toast'
-
-import ProtectedRoute from './ui/ProtectedRoute'
-import { DarkModeProvider } from './context/DarkModeContext'
-import Todos from './pages/Todos'
-import Categories from './pages/Categories'
-import Signup from './pages/Signup'
-import { SearchTaskProvider } from './context/SearchTaskContext'
 import { Provider } from 'react-redux'
 import { store } from './store'
-import Calendar from './pages/Calendar'
-import { Suspense } from 'react'
+import { Toaster } from 'react-hot-toast'
+import { lazy, Suspense } from 'react'
+
+import { DarkModeProvider } from './context/DarkModeContext'
+import { SearchTaskProvider } from './context/SearchTaskContext'
+
+import GlobalStyles from './styles/GlobalStyles'
 import Spinner from './ui/Spinner'
+import ProtectedRoute from './ui/ProtectedRoute'
+
+const AppLayout = lazy(() => import('./pages/AppLayout'))
+const Dashboard = lazy(() => import('./pages/Dashboard'))
+const Login = lazy(() => import('./pages/Login'))
+const Account = lazy(() => import('./pages/Account'))
+const Todos = lazy(() => import('./pages/Todos'))
+const Signup = lazy(() => import('./pages/Signup'))
+const Categories = lazy(() => import('./pages/Categories'))
+const Calendar = lazy(() => import('./pages/Calendar'))
+const PageNotFound = lazy(() => import('./pages/PageNotFound'))
 
 const queryClient = new QueryClient({
   defaultOptions: {

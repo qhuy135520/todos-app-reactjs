@@ -53,7 +53,7 @@ const categoriesSlice = createSlice({
       })
       .addCase(fetchCategories.rejected, (state, action) => {
         state.status = 'failed'
-        state.error = action.error.message
+        state.error = action.error
       })
       .addCase(createCategory.pending, (state) => {
         state.status = 'pending'
@@ -61,54 +61,46 @@ const categoriesSlice = createSlice({
 
       .addCase(createCategory.fulfilled, (state, action) => {
         state.status = 'succeeded'
-        state.items = action.payload.data
-        state.totalItems = action.payload.totalItems
-        state.totalPages = action.payload.totalPages
-        state.currentPage = 1
-        state.filter = 'all'
-        state.sortBy = 'createdAt-desc'
-        state.searchTerm = ''
+        handleResetItems(state, action)
       })
       .addCase(createCategory.rejected, (state, action) => {
         state.status = 'failed'
-        state.error = action.error.message
+        state.error = action.error
       })
       .addCase(deleteCategory.pending, (state, action) => {
         state.status = 'pending'
       })
       .addCase(deleteCategory.fulfilled, (state, action) => {
         state.status = 'succeeded'
-        state.items = action.payload.data
-        state.totalItems = action.payload.totalItems
-        state.totalPages = action.payload.totalPages
-        state.currentPage = 1
-        state.filter = 'all'
-        state.sortBy = 'createdAt-desc'
-        state.searchTerm = ''
+        handleResetItems(state, action)
       })
       .addCase(deleteCategory.rejected, (state, action) => {
         state.status = 'failed'
-        state.error = action.error.message
+        state.error = action.error
       })
       .addCase(updateCategory.pending, (state, action) => {
         state.status = 'pending'
       })
       .addCase(updateCategory.fulfilled, (state, action) => {
         state.status = 'succeeded'
-        state.items = action.payload.data
-        state.totalItems = action.payload.totalItems
-        state.totalPages = action.payload.totalPages
-        state.currentPage = 1
-        state.filter = 'all'
-        state.sortBy = 'createdAt-desc'
-        state.searchTerm = ''
+        handleResetItems(state, action)
       })
       .addCase(updateCategory.rejected, (state, action) => {
         state.status = 'failed'
-        state.error = action.error.message
+        state.error = action.error
       })
   },
 })
+
+const handleResetItems = (state, action) => {
+  state.items = action.payload.data
+  state.totalItems = action.payload.totalItems
+  state.totalPages = action.payload.totalPages
+  state.currentPage = 1
+  state.filter = 'all'
+  state.sortBy = 'createdAt-desc'
+  state.searchTerm = ''
+}
 
 export const fetchCategories = createAsyncThunk(
   'categories/fetchCategories',
