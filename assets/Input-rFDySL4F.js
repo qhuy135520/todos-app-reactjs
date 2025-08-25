@@ -1,0 +1,23 @@
+import{a2 as o,d}from"./index-CrLZqs61.js";const a=d.form`
+  ${r=>r.type==="regular"&&o`
+      padding: 2.4rem 4rem;
+
+      /* Box */
+      background-color: var(--color-grey-0);
+      border: 1px solid var(--color-grey-100);
+      border-radius: var(--border-radius-md);
+    `}
+
+  ${r=>r.type==="modal"&&o`
+      width: 100%;
+    `}
+    
+  overflow: hidden;
+  font-size: 1.4rem;
+`;a.defaultProps={type:"regular"};const s=d.input`
+  border: 1px solid var(--color-grey-300);
+  background-color: var(--color-grey-0);
+  border-radius: var(--border-radius-sm);
+  padding: 0.8rem 1.2rem;
+  box-shadow: var(--shadow-sm);
+`;export{a as F,s as I};
