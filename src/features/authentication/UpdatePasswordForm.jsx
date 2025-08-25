@@ -5,6 +5,7 @@ import FormRow from '../../ui/FormRow'
 import Input from '../../ui/Input'
 
 import { useUpdateUser } from './useUpdateUser'
+import FormRowVertical from '../../ui/FormRowVertical'
 
 function UpdatePasswordForm() {
   const { register, handleSubmit, formState, getValues, reset } = useForm()
@@ -18,7 +19,7 @@ function UpdatePasswordForm() {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormRow
+      <FormRowVertical
         label='New password (min 8 chars)'
         error={errors?.password?.message}
       >
@@ -35,9 +36,9 @@ function UpdatePasswordForm() {
             },
           })}
         />
-      </FormRow>
+      </FormRowVertical>
 
-      <FormRow
+      <FormRowVertical
         label='Confirm password'
         error={errors?.passwordConfirm?.message}
       >
@@ -52,7 +53,7 @@ function UpdatePasswordForm() {
               getValues().password === value || 'Passwords need to match',
           })}
         />
-      </FormRow>
+      </FormRowVertical>
       <FormRow>
         <Button
           onClick={reset}

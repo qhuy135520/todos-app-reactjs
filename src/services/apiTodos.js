@@ -52,7 +52,7 @@ export async function createTodo(userId, todo, categoryIds) {
       if (addCateErr) throw addCateErr
     }
 
-    const { data, totalItems, totalPages } = await getCategoriesFromTask(userId)
+    const { data, totalItems, totalPages } = await getTodo(userId)
     return { data, totalItems, totalPages }
   } catch (err) {
     throw new Error(err.message)
@@ -106,7 +106,6 @@ export async function updateTodo(userID, taskID, dataUpdate) {
 }
 
 export async function deleteTodo(userID, taskID) {
-  
   await supabase.from('todo_categories').delete().eq('todoId', taskID)
 
   const { error } = await supabase.from('todos').delete().eq('id', taskID)
@@ -116,12 +115,12 @@ export async function deleteTodo(userID, taskID) {
   return { data, totalItems, totalPages }
 }
 
-export async function getCategoriesFromTask(taskID) {
-  const { data, error } = await supabase
-    .from('todo_categories')
-    .select('categories(id, name)')
-    .eq('todoId', taskID)
+// export async function getCategoriesFromTask(taskID) {
+//   const { data, error } = await supabase
+//     .from('todo_categories')
+//     .select('categories(id, name)')
+//     .eq('todoId', taskID)
 
-  if (error) throw new Error(error.message)
-  return data
-}
+//   if (error) throw new Error(error.message)
+//   return data
+// }

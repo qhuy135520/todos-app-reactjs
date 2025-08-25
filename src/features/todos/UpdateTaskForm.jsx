@@ -35,7 +35,7 @@ export default function UpdateTaskForm({ onCloseModal, data }) {
   } = useTodos(newData)
 
   return (
-    <LoadingComponent isLoading={isPending} error={errors}>
+    <>
       <Heading as='h4'>Add new Task</Heading>
       <Form
         type={onCloseModal ? 'modal' : 'regular'}
@@ -130,6 +130,6 @@ export default function UpdateTaskForm({ onCloseModal, data }) {
           </Button>
         </FormRowVertical>
       </Form>
-    </LoadingComponent>
+    </>
   )
 }

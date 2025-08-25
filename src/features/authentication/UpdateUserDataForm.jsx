@@ -9,11 +9,23 @@ import Input from '../../ui/Input'
 import { useUser } from './useUser'
 import { useUpdateUser } from './useUpdateUser'
 import Logo from '../../ui/Logo'
+import FormRowVertical from '../../ui/FormRowVertical'
+import styled from 'styled-components'
+
+const InputCustom = styled.div`
+  border: 1px solid var(--color-grey-300);
+  background-color: var(--color-grey-0);
+  border-radius: var(--border-radius-sm);
+  padding: 0.8rem 1.2rem;
+  box-shadow: var(--shadow-sm);
+  @media (max-width: 1367px) {
+    width: 50%;
+  }
+`
 
 function UpdateUserDataForm() {
   const { updateUser, isUpdating } = useUpdateUser()
 
-  // We don't need the loading state, and can immediately use the user data, because we know that it has already been loaded at this point
   const {
     user: {
       email,
@@ -47,10 +59,10 @@ function UpdateUserDataForm() {
   return (
     <>
       <Form onSubmit={handleSubmit}>
-        <FormRow label='Email address'>
+        <FormRowVertical label='Email address'>
           <Input value={email} disabled />
-        </FormRow>
-        <FormRow label='Full name'>
+        </FormRowVertical>
+        <FormRowVertical label='Full name'>
           <Input
             type='text'
             value={fullName}
@@ -58,15 +70,15 @@ function UpdateUserDataForm() {
             id='fullName'
             disabled={isUpdating}
           />
-        </FormRow>
-        <FormRow label='Avatar image'>
+        </FormRowVertical>
+        <FormRowVertical label='Avatar image'>
           <FileInput
             id='avatar'
             accept='image/*'
             onChange={(e) => setAvatar(e.target.files[0])}
             disabled={isUpdating}
           />
-        </FormRow>
+        </FormRowVertical>
         <FormRow>
           <Button
             type='reset'

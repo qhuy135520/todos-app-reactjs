@@ -26,7 +26,7 @@ const StyledModal = styled.div`
     overflow-y: scroll;
   }
 
-  @media (max-width: 412px) {
+  @media (max-width: 468px) {
     width: 90%;
   }
 `

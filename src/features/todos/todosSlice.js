@@ -1,6 +1,11 @@
 import { createAsyncThunk, createSlice, createSelector } from '@reduxjs/toolkit'
 import { PAGE_SIZE } from '../../utils/constants'
-import { createTodo, deleteTodo, getTodo, updateTodo } from '../../services/apiTodos'
+import {
+  createTodo,
+  deleteTodo,
+  getTodo,
+  updateTodo,
+} from '../../services/apiTodos'
 
 const initialState = {
   items: [],
@@ -23,8 +28,8 @@ export const fetchTodosSlice = createAsyncThunk(
     try {
       const { data, totalItems, totalPages } = await getTodo(userId)
       return { data, totalItems, totalPages }
-    } catch (err) {
-      throw err
+    } catch (error) {
+      throw error
     }
   }
 )
@@ -40,8 +45,8 @@ export const createTodoSlice = createAsyncThunk(
       )
       dispatch(fetchTodosSlice(userId))
       return { data, totalItems, totalPages }
-    } catch (err) {
-      throw err
+    } catch (error) {
+      throw error
     }
   }
 )
@@ -50,11 +55,11 @@ export const deleteTodoSlice = createAsyncThunk(
   'todos/deleteTodoSlice',
   async ({ userID, todoID }, { dispatch }) => {
     try {
-      const { data, totalItems, totalPages } = await deleteTodo(userID,todoID)
-      dispatch(fetchTodosSlice(userID))    
+      const { data, totalItems, totalPages } = await deleteTodo(userID, todoID)
+      dispatch(fetchTodosSlice(userID))
       return { data, totalItems, totalPages }
-    } catch (err) {
-      throw err
+    } catch (error) {
+      throw error
     }
   }
 )
@@ -70,8 +75,8 @@ export const updateTodoSlice = createAsyncThunk(
       )
       dispatch(fetchTodosSlice(userID))
       return { data, totalItems, totalPages }
-    } catch (err) {
-      throw err
+    } catch (error) {
+      throw error
     }
   }
 )

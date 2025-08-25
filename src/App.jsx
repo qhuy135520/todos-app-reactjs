@@ -36,7 +36,7 @@ export default function App() {
     <DarkModeProvider>
       <Provider store={store}>
         <QueryClientProvider client={queryClient}>
-          <ReactQueryDevtools initialIsOpen={false} />
+          {/* <ReactQueryDevtools initialIsOpen={false} /> */}
           <GlobalStyles />
           <BrowserRouter>
             <Suspense fallback={<Spinner />}>
